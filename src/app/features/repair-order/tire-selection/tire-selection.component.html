@@ -1,0 +1,53 @@
+<div class="tire-selection-container">
+    <h2 class="page-title">Pneumatiques</h2>
+    
+    <div class="form-container">
+      <mat-card class="tire-section front-section">
+        <mat-card-header>
+          <mat-card-title class="section-title">Train Avant</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <app-radio-group
+            label="Type de pneu"
+            name="frontTireType"
+            [options]="tireOptions"
+            [value]="data.front"
+            (valueChange)="onFrontTireChange($event)"
+            [required]="true"
+          ></app-radio-group>
+        </mat-card-content>
+      </mat-card>
+  
+      <mat-card class="tire-section rear-section">
+        <mat-card-header>
+          <mat-card-title class="section-title">Train Arrière</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <app-radio-group
+            label="Type de pneu"
+            name="rearTireType"
+            [options]="tireOptions"
+            [value]="data.rear"
+            (valueChange)="onRearTireChange($event)"
+            [required]="true"
+          ></app-radio-group>
+        </mat-card-content>
+      </mat-card>
+  
+      <div class="button-container">
+        <app-button
+          variant="secondary"
+          (buttonClick)="onPrevious()"
+        >
+          Précédent
+        </app-button>
+        
+        <app-button
+          variant="primary"
+          (buttonClick)="onNext()"
+        >
+          Suivant
+        </app-button>
+      </div>
+    </div>
+  </div>

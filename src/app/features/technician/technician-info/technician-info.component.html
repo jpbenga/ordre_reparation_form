@@ -1,0 +1,39 @@
+<div class="technician-container">
+    <h2 class="page-title">Identification du technicien</h2>
+    
+    <mat-card class="info-card">
+      <mat-card-content>
+        <p class="info-text">
+          Veuillez vous identifier pour commencer à saisir des ordres de réparation. 
+          Tous les ordres seront associés à votre nom.
+        </p>
+      </mat-card-content>
+    </mat-card>
+  
+    <div class="form-container">
+      <app-input-field
+        label="Nom du technicien"
+        [value]="techData.name"
+        (valueChange)="onNameChange($event)"
+        placeholder="Entrez votre nom"
+        [required]="true"
+        [error]="errors.name"
+      ></app-input-field>
+  
+      <app-input-field
+        label="Date d'intervention"
+        [value]="techData.date"
+        (valueChange)="onDateChange($event)"
+        type="date"
+      ></app-input-field>
+  
+      <div class="button-container">
+        <app-button
+          variant="primary"
+          (buttonClick)="onSubmit()"
+        >
+          Commencer
+        </app-button>
+      </div>
+    </div>
+  </div>

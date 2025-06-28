@@ -1,0 +1,63 @@
+<div class="car-chassis-container">
+  <div class="measurement-layout">
+    <!-- Colonne gauche avec inputs -->
+    <div class="left-inputs">
+      <!-- Avant Gauche (AVG) -->
+      <div class="input-group">
+        <label class="tire-label">AVG</label>
+        <input 
+          type="text" 
+          [value]="values.frontLeft"
+          (input)="onValueChange('frontLeft', $any($event.target).value)"
+          placeholder="mm"
+          class="tire-input"
+        />
+      </div>
+
+      <!-- Arrière Gauche (ARG) -->
+      <div class="input-group">
+        <label class="tire-label">ARG</label>
+        <input 
+          type="text" 
+          [value]="values.rearLeft"
+          (input)="onValueChange('rearLeft', $any($event.target).value)"
+          placeholder="mm"
+          class="tire-input"
+        />
+      </div>
+    </div>
+
+    <!-- Image du véhicule au centre -->
+    <div class="car-image-container">
+      <img src="/assets/car_vector.png" alt="Vue du dessus du véhicule" class="car-image" />
+      <p class="instruction-text">Profondeur sculpture restante (mm)</p>
+    </div>
+
+    <!-- Colonne droite avec inputs -->
+    <div class="right-inputs">
+      <!-- Avant Droit (AVD) -->
+      <div class="input-group">
+        <label class="tire-label">AVD</label>
+        <input 
+          type="text" 
+          [value]="values.frontRight"
+          (input)="onValueChange('frontRight', $any($event.target).value)"
+          placeholder="mm"
+          class="tire-input"
+        />
+      </div>
+
+      <!-- Arrière Droit (ARD) -->
+      <div class="input-group">
+        <label class="tire-label">ARD</label>
+        <input 
+          type="text" 
+          [value]="values.rearRight"
+          (input)="onValueChange('rearRight', $any($event.target).value)"
+          placeholder="mm"
+          class="tire-input"
+        />
+      </div>
+    </div>
+  </div>
+</div>

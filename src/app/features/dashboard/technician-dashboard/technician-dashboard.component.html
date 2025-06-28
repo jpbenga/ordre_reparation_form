@@ -1,0 +1,99 @@
+<div class="dashboard-container">
+    <div class="dashboard-header">
+      <h2 class="page-title">Tableau de bord technicien</h2>
+      <div class="date-info">{{ technicianInfo.date | date:'dd/MM/yyyy' }}</div>
+    </div>
+  
+    <mat-card class="technician-card">
+      <mat-card-content>
+        <div class="technician-info">
+          <div class="avatar">
+            {{ technicianInfo.name.charAt(0).toUpperCase() }}
+          </div>
+          <div class="tech-details">
+            <p class="tech-name">{{ technicianInfo.name }}</p>
+            <p class="tech-role">Technicien</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  
+    <div class="orders-section">
+      <div class="section-header">
+        <h3 class="section-title">
+          Ordres de réparation ({{ repairOrders.length }})
+        </h3>
+        <app-button
+          variant="primary"
+          (buttonClick)="onStartNew()"
+          icon="add"
+        >
+          Nouveau
+        </app-button>
+      </div>
+  
+      <div *ngIf="repairOrders.length === 0" class="empty-state">
+        <mat-icon class="empty-icon">description</mat-icon>
+        <p class="empty-text">Aucun ordre de réparation pour aujourd'hui</p>
+        <p class="empty-subtext">Cliquez sur "Nouveau" pour commencer</p>
+      </div>
+  
+      <div *ngFor="let companyEntry of companyEntries" class="company-group">
+        <h4 class="company-title">{{ companyEntry[0] }}</h4>
+        
+        <div class="orders-list">
+          <mat-card 
+            *ngFor="let order of companyEntry[1]" 
+            class="order-card"
+          >
+            <mat-card-content>
+              <div class="order-content">
+                <div class="order-info">
+                  <p class="driver-name">
+                    {{ order.driver.firstName }} {{ order.driver.lastName }}
+                  </p>
+                  <p class="vehicle-info">
+                    {{ order.vehicle.brand }} - {{ order.vehicle.registration }}
+                  </p>
+                  <p class="tire-info" *ngIf="order.tires.front || order.tires.rear">
+                    <span *ngIf="order.tires.front">AV: {{ getTireTypeLabel(order.tires.front) }}</span>
+                    <span *ngIf="order.tires.front && order.tires.rear">, </span>
+                    <span *ngIf="order.tires.rear">AR: {{ getTireTypeLabel(order.tires.rear) }}</span>
+                  </p>
+                </div>
+                
+                <div class="order-actions">
+                  <button 
+                    mat-icon-button
+                    (click)="onEdit(order.id)"
+                    class="edit-btn"
+                    title="Modifier"
+                  >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button 
+                    mat-icon-button
+                    (click)="onDelete(order.id)"
+                    class="delete-btn"
+                    title="Supprimer"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+  
+      <div *ngIf="repairOrders.length > 0" class="billing-section">
+        <app-button
+          variant="primary"
+          (buttonClick)="onSendForBilling()"
+          icon="send"
+        >
+          Envoyer pour facturation
+        </app-button>
+      </div>
+    </div>
+  </div>

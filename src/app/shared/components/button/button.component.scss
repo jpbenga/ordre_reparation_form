@@ -1,0 +1,57 @@
+.custom-button {
+    padding: 8px 16px;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    
+    &.primary {
+      background-color: #0054A4;
+      color: white;
+      
+      &:hover:not(:disabled) {
+        background-color: #004080;
+      }
+    }
+    
+    &.secondary {
+      background-color: #e5e7eb;
+      color: #374151;
+      
+      &:hover:not(:disabled) {
+        background-color: #d1d5db;
+      }
+    }
+    
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+  
+  .button-icon {
+    margin-right: 8px;
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+  
+  ::ng-deep .mat-mdc-raised-button {
+    box-shadow: none !important;
+    
+    &.primary {
+      background-color: #0054A4 !important;
+      
+      &:hover {
+        background-color: #004080 !important;
+      }
+    }
+    
+    &.secondary {
+      background-color: #e5e7eb !important;
+      color: #374151 !important;
+      
+      &:hover {
+        background-color: #d1d5db !important;
+      }
+    }
+  }

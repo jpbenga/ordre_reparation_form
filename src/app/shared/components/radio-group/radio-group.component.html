@@ -1,0 +1,21 @@
+<div class="radio-group-container">
+    <label class="group-label">
+      {{ label }}
+      <span *ngIf="required" class="required">*</span>
+    </label>
+    
+    <mat-radio-group 
+      [name]="name"
+      [value]="value"
+      (change)="onValueChange($event.value)"
+      class="radio-group"
+    >
+      <mat-radio-button 
+        *ngFor="let option of options" 
+        [value]="option.value"
+        class="radio-button"
+      >
+        {{ option.label }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>

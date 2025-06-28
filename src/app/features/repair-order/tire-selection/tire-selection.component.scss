@@ -1,0 +1,78 @@
+.tire-selection-container {
+    max-width: 600px;
+    margin: 0 auto;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 24px;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .tire-section {
+    background-color: #f9fafb;
+    
+    &.front-section {
+      border-left: 4px solid #0054A4;
+    }
+    
+    &.rear-section {
+      border-left: 4px solid #0054A4;
+    }
+  }
+  
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0054A4;
+    margin: 0;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+    gap: 16px;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  ::ng-deep .mat-mdc-card-header {
+    padding: 16px 16px 0 16px;
+  }
+  
+  ::ng-deep .mat-mdc-card-content {
+    padding: 16px;
+  }
+  
+  @media (max-width: 640px) {
+    .tire-selection-container {
+      padding: 16px;
+    }
+  
+    .page-title {
+      font-size: 1.5rem;
+    }
+  
+    .button-container {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }

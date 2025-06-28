@@ -1,0 +1,82 @@
+.storage-container {
+    max-width: 600px;
+    margin: 0 auto;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 24px;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .storage-section {
+    background-color: #f9fafb;
+    border-left: 4px solid #0054A4;
+  }
+  
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0054A4;
+    margin: 0;
+  }
+  
+  .details-section {
+    background: white;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+    gap: 16px;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  ::ng-deep .mat-mdc-card-header {
+    padding: 16px 16px 0 16px;
+  }
+  
+  ::ng-deep .mat-mdc-card-content {
+    padding: 16px;
+  }
+  
+  @media (max-width: 640px) {
+    .storage-container {
+      padding: 16px;
+    }
+  
+    .page-title {
+      font-size: 1.5rem;
+    }
+  
+    .details-section {
+      padding: 16px;
+    }
+  
+    .button-container {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }

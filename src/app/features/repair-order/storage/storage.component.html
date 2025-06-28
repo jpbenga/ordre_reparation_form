@@ -1,0 +1,64 @@
+<div class="storage-container">
+    <h2 class="page-title">Gardiennage</h2>
+    
+    <div class="form-container">
+      <mat-card class="storage-section">
+        <mat-card-header>
+          <mat-card-title class="section-title">Entrée stock</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <app-checkbox
+            label="Roue complète"
+            [checked]="data.completeWheel"
+            (checkedChange)="onCheckboxChange('completeWheel', $event)"
+          ></app-checkbox>
+  
+          <app-checkbox
+            label="Enjoliveur"
+            [checked]="data.hubcap"
+            (checkedChange)="onCheckboxChange('hubcap', $event)"
+          ></app-checkbox>
+  
+          <app-checkbox
+            label="Visserie"
+            [checked]="data.screws"
+            (checkedChange)="onCheckboxChange('screws', $event)"
+          ></app-checkbox>
+        </mat-card-content>
+      </mat-card>
+  
+      <div class="details-section">
+        <app-input-field
+          label="Profil (mm)"
+          [value]="data.profile"
+          (valueChange)="onFieldChange('profile', $event)"
+          placeholder="Entrez la valeur en mm"
+          type="number"
+        ></app-input-field>
+  
+        <app-input-field
+          label="Emplacement"
+          [value]="data.location"
+          (valueChange)="onFieldChange('location', $event)"
+          placeholder="Précisez l'emplacement"
+        ></app-input-field>
+      </div>
+  
+      <div class="button-container">
+        <app-button
+          variant="secondary"
+          (buttonClick)="onPrevious()"
+        >
+          Précédent
+        </app-button>
+        
+        <app-button
+          variant="primary"
+          (buttonClick)="onFinish()"
+          icon="check"
+        >
+          Finaliser
+        </app-button>
+      </div>
+    </div>
+  </div>

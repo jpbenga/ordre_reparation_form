@@ -1,0 +1,79 @@
+.repair-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .back-button {
+    color: #0054A4;
+    background: none;
+    border: none;
+    font-size: 0.875rem;
+    cursor: pointer;
+    padding: 8px 0;
+    transition: color 0.2s ease;
+    
+    &:hover {
+      color: #004080;
+      text-decoration: underline;
+    }
+  }
+  
+  .technician-info {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 500;
+  }
+  
+  .step-content {
+    margin-top: 24px;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .repair-form-container {
+      padding: 16px;
+    }
+  
+    .form-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  
+    .technician-info {
+      font-size: 0.75rem;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .form-header {
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+    }
+  
+    .step-content {
+      margin-top: 16px;
+    }
+  }

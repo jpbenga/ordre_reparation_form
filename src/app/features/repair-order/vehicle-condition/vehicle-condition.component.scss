@@ -1,0 +1,64 @@
+.vehicle-condition-container {
+    max-width: 600px;
+    margin: 0 auto;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 24px;
+  }
+  
+  .form-container {
+    background: white;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .instruction-text {
+    color: #6b7280;
+    margin-bottom: 16px;
+    text-align: center;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+    gap: 16px;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .vehicle-condition-container {
+      padding: 16px;
+    }
+  
+    .page-title {
+      font-size: 1.5rem;
+    }
+  
+    .form-container {
+      padding: 16px;
+    }
+  
+    .button-container {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }

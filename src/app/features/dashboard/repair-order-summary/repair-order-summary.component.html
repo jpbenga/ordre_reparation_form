@@ -1,0 +1,118 @@
+<div class="summary-container">
+    <div class="summary-header">
+      <h2 class="page-title">Récapitulatif des ordres</h2>
+      <button 
+        class="back-button"
+        (click)="onBack()"
+      >
+        <mat-icon>arrow_back</mat-icon>
+        Retour
+      </button>
+    </div>
+  
+    <!-- Statistiques -->
+    <div class="stats-grid">
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <p class="stat-label">Total des ordres</p>
+          <p class="stat-value">{{ totalOrders }}</p>
+        </mat-card-content>
+      </mat-card>
+  
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <p class="stat-label">Entreprises</p>
+          <p class="stat-value">{{ totalCompanies }}</p>
+        </mat-card-content>
+      </mat-card>
+  
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <p class="stat-label">Date</p>
+          <p class="stat-value">{{ currentDate | date:'dd/MM/yyyy' }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  
+    <!-- Ordres par entreprise -->
+    <div *ngFor="let companyEntry of companyEntries" class="company-section">
+      <mat-card class="company-card">
+        <mat-card-header class="company-header">
+          <mat-card-title>{{ companyEntry[0] }}</mat-card-title>
+          <mat-card-subtitle>
+            {{ companyEntry[1].length }} ordres de réparation
+          </mat-card-subtitle>
+        </mat-card-header>
+  
+        <mat-card-content>
+          <div class="table-container">
+            <table mat-table [dataSource]="companyEntry[1]" class="orders-table">
+              <!-- Colonne Conducteur -->
+              <ng-container matColumnDef="driver">
+                <th mat-header-cell *matHeaderCellDef>Conducteur</th>
+                <td mat-cell *matCellDef="let order">
+                  {{ order.driver.firstName }} {{ order.driver.lastName }}
+                </td>
+              </ng-container>
+  
+              <!-- Colonne Véhicule -->
+              <ng-container matColumnDef="vehicle">
+                <th mat-header-cell *matHeaderCellDef>Véhicule</th>
+                <td mat-cell *matCellDef="let order">
+                  {{ order.vehicle.brand }}
+                </td>
+              </ng-container>
+  
+              <!-- Colonne Immatriculation -->
+              <ng-container matColumnDef="registration">
+                <th mat-header-cell *matHeaderCellDef>Immatriculation</th>
+                <td mat-cell *matCellDef="let order">
+                  {{ order.vehicle.registration }}
+                </td>
+              </ng-container>
+  
+              <!-- Colonne Pneumatiques -->
+              <ng-container matColumnDef="tires">
+                <th mat-header-cell *matHeaderCellDef>Pneumatiques</th>
+                <td mat-cell *matCellDef="let order">
+                  <span *ngIf="order.tires.front">
+                    AV: {{ getTireTypeLabel(order.tires.front) }}
+                  </span>
+                  <span *ngIf="order.tires.front && order.tires.rear">, </span>
+                  <span *ngIf="order.tires.rear">
+                    AR: {{ getTireTypeLabel(order.tires.rear) }}
+                  </span>
+                </td>
+              </ng-container>
+  
+              <tr mat-header-row *matHeaderRowDef="['driver', 'vehicle', 'registration', 'tires']"></tr>
+              <tr 
+                mat-row 
+                *matRowDef="let row; columns: ['driver', 'vehicle', 'registration', 'tires']"
+                class="order-row"
+              ></tr>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  
+    <!-- Actions -->
+    <div class="actions-section">
+      <app-button
+        variant="secondary"
+        (buttonClick)="onPrint()"
+        icon="print"
+      >
+        Imprimer
+      </app-button>
+  
+      <app-button
+        variant="primary"
+        (buttonClick)="onSendForBilling()"
+        icon="send"
+      >
+        Envoyer pour facturation
+      </app-button>
+    </div>
+  </div>

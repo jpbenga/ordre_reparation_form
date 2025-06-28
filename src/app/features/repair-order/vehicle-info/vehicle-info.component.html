@@ -1,0 +1,50 @@
+<div class="vehicle-info-container">
+    <h2 class="page-title">Informations du véhicule</h2>
+    
+    <div class="form-container">
+      <app-input-field
+        label="Immatriculation"
+        [value]="data.registration"
+        (valueChange)="onFieldChange('registration', $event)"
+        placeholder="AB-123-CD"
+        [required]="true"
+        [error]="errors.registration"
+      ></app-input-field>
+  
+      <app-dropdown
+        label="Marque"
+        [value]="data.brand"
+        (valueChange)="onFieldChange('brand', $event)"
+        [options]="carBrands"
+        [required]="true"
+        [error]="errors.brand"
+        placeholder="Sélectionner une marque"
+      ></app-dropdown>
+  
+      <app-input-field
+        label="Kilométrage"
+        [value]="data.mileage"
+        (valueChange)="onFieldChange('mileage', $event)"
+        placeholder="Entrez le kilométrage"
+        type="number"
+        [required]="true"
+        [error]="errors.mileage"
+      ></app-input-field>
+  
+      <div class="button-container">
+        <app-button
+          variant="secondary"
+          (buttonClick)="onPrevious()"
+        >
+          Précédent
+        </app-button>
+        
+        <app-button
+          variant="primary"
+          (buttonClick)="onNext()"
+        >
+          Suivant
+        </app-button>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,10 @@
+<div class="checkbox-container">
+    <mat-checkbox 
+      [checked]="checked"
+      [disabled]="disabled"
+      (change)="onCheckedChange($event.checked)"
+      class="custom-checkbox"
+    >
+      {{ label }}
+    </mat-checkbox>
+  </div>

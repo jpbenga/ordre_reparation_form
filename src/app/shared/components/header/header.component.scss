@@ -1,0 +1,48 @@
+.header-toolbar {
+  background-color: #0054A4 !important;
+  padding: 16px;
+}
+
+.header-content {
+  max-width: 768px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.logo {
+  height: 40px;
+  max-width: 200px;
+  object-fit: contain;
+}
+
+.title {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 0 0 16px;
+}
+
+@media (min-width: 768px) {
+  .logo {
+    height: 48px;
+    max-width: 250px;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .logo {
+    height: 32px;
+    max-width: 150px;
+  }
+  
+  .title {
+    font-size: 1.25rem;
+    margin-left: 12px;
+  }
+}

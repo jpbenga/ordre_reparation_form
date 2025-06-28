@@ -1,0 +1,30 @@
+<div class="vehicle-condition-container">
+    <h2 class="page-title">État du véhicule</h2>
+    
+    <div class="form-container">
+      <p class="instruction-text">
+        Veuillez indiquer la pression des pneus (en bar) pour chaque roue.
+      </p>
+  
+      <app-car-chassis
+        [values]="data"
+        (valuesChange)="onConditionChange($event)"
+      ></app-car-chassis>
+  
+      <div class="button-container">
+        <app-button
+          variant="secondary"
+          (buttonClick)="onPrevious()"
+        >
+          Précédent
+        </app-button>
+        
+        <app-button
+          variant="primary"
+          (buttonClick)="onNext()"
+        >
+          Suivant
+        </app-button>
+      </div>
+    </div>
+  </div>

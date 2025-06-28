@@ -1,0 +1,46 @@
+.radio-group-container {
+    margin-bottom: 16px;
+  }
+  
+  .group-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 8px;
+  }
+  
+  .required {
+    color: #ef4444;
+  }
+  
+  .radio-group {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  
+  .radio-button {
+    margin-right: 0;
+  }
+  
+  ::ng-deep .mat-mdc-radio-button {
+    .mdc-radio {
+      .mdc-radio__native-control:enabled:checked + .mdc-radio__background .mdc-radio__outer-circle {
+        border-color: #0054A4;
+      }
+      
+      .mdc-radio__native-control:enabled + .mdc-radio__background .mdc-radio__inner-circle {
+        border-color: #0054A4;
+      }
+      
+      .mdc-radio__native-control:enabled:checked + .mdc-radio__background .mdc-radio__inner-circle {
+        border-color: #0054A4;
+        background-color: #0054A4;
+      }
+    }
+    
+    .mdc-form-field > label {
+      color: #374151;
+    }
+  }

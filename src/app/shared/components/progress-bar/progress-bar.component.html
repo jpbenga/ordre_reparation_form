@@ -1,0 +1,23 @@
+<div class="progress-container">
+    <div class="steps-container">
+      <div 
+        *ngFor="let step of steps" 
+        class="step"
+        [ngClass]="step.status"
+      >
+        <div class="step-circle">
+          {{ step.number }}
+        </div>
+        <span class="step-label">
+          {{ step.label }}
+        </span>
+      </div>
+    </div>
+    
+    <div class="progress-bar">
+      <div 
+        class="progress-fill" 
+        [style.width.%]="progress"
+      ></div>
+    </div>
+  </div>
