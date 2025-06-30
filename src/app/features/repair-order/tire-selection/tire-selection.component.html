@@ -1,53 +1,379 @@
 <div class="tire-selection-container">
-    <h2 class="page-title">Pneumatiques</h2>
-    
-    <div class="form-container">
-      <mat-card class="tire-section front-section">
-        <mat-card-header>
-          <mat-card-title class="section-title">Train Avant</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <app-radio-group
-            label="Type de pneu"
-            name="frontTireType"
-            [options]="tireOptions"
-            [value]="data.front"
-            (valueChange)="onFrontTireChange($event)"
-            [required]="true"
-          ></app-radio-group>
-        </mat-card-content>
-      </mat-card>
+  <h2 class="page-title">PNEUMATIQUES</h2>
   
-      <mat-card class="tire-section rear-section">
-        <mat-card-header>
-          <mat-card-title class="section-title">Train Arrière</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <app-radio-group
-            label="Type de pneu"
-            name="rearTireType"
-            [options]="tireOptions"
-            [value]="data.rear"
-            (valueChange)="onRearTireChange($event)"
-            [required]="true"
-          ></app-radio-group>
-        </mat-card-content>
-      </mat-card>
-  
-      <div class="button-container">
-        <app-button
-          variant="secondary"
-          (buttonClick)="onPrevious()"
-        >
-          Précédent
-        </app-button>
+  <div class="form-container">
+    <div class="tires-grid">
+      <!-- PNEU AV -->
+      <div class="tire-section">
+        <h3 class="section-title">PNEU AV</h3>
         
-        <app-button
-          variant="primary"
-          (buttonClick)="onNext()"
-        >
-          Suivant
-        </app-button>
+        <div class="tire-type-row">
+          <app-checkbox
+            label="Été"
+            [checked]="data.front === 'summer'"
+            (checkedChange)="onFieldChange('front', $event ? 'summer' : '')"
+          ></app-checkbox>
+          <app-checkbox
+            label="Toutes Saisons"
+            [checked]="data.front === 'allSeason'"
+            (checkedChange)="onFieldChange('front', $event ? 'allSeason' : '')"
+          ></app-checkbox>
+          <app-checkbox
+            label="Hiver"
+            [checked]="data.front === 'winter'"
+            (checkedChange)="onFieldChange('front', $event ? 'winter' : '')"
+          ></app-checkbox>
+        </div>
+        
+        <app-input-field
+          label="Marque"
+          [value]="data.frontBrand"
+          (valueChange)="onFieldChange('frontBrand', $event)"
+          placeholder="Michelin"
+          [required]="!!data.frontTireCount && data.frontTireCount !== '0'"
+          [error]="errors.frontBrand"
+        ></app-input-field>
+        
+        <app-input-field
+          label="Profil"
+          [value]="data.frontModel"
+          (valueChange)="onFieldChange('frontModel', $event)"
+          placeholder="Primacy 5"
+          [required]="!!data.frontTireCount && data.frontTireCount !== '0'"
+          [error]="errors.frontModel"
+        ></app-input-field>
+        
+        <div class="dimension-row">
+          <app-input-field
+            label="Dimension"
+            [value]="data.frontDimension"
+            (valueChange)="onFieldChange('frontDimension', $event)"
+            placeholder="Ex: 195/60/R16"
+            [required]="!!data.frontTireCount && data.frontTireCount !== '0'"
+            [error]="errors.frontDimension"
+          ></app-input-field>
+          <app-input-field
+            label="Indices"
+            [value]="data.frontIndex"
+            (valueChange)="onFieldChange('frontIndex', $event)"
+            placeholder="Ex: 96H"
+          ></app-input-field>
+        </div>
+        
+        <app-input-field
+          label="NB de pneus"
+          [value]="data.frontTireCount"
+          (valueChange)="onFieldChange('frontTireCount', $event)"
+          placeholder="Nombre"
+          type="number"
+          [required]="true"
+          [error]="errors.frontTireCount"
+        ></app-input-field>
+      </div>
+
+      <!-- PNEU AR -->
+      <div class="tire-section">
+        <h3 class="section-title">
+          <span>PNEU AR</span>
+          <button 
+            type="button"
+            *ngIf="data.frontBrand || data.frontModel || data.frontDimension || data.frontIndex"
+            (click)="copyAllFrontToRear()"
+            class="copy-all-button"
+            title="Copier toutes les données du pneu avant"
+          >
+            Copier tout
+          </button>
+        </h3>
+        
+        <div class="tire-type-row">
+          <app-checkbox
+            label="Été"
+            [checked]="data.rear === 'summer'"
+            (checkedChange)="onFieldChange('rear', $event ? 'summer' : '')"
+          ></app-checkbox>
+          <app-checkbox
+            label="Toutes Saisons"
+            [checked]="data.rear === 'allSeason'"
+            (checkedChange)="onFieldChange('rear', $event ? 'allSeason' : '')"
+          ></app-checkbox>
+          <app-checkbox
+            label="Hiver"
+            [checked]="data.rear === 'winter'"
+            (checkedChange)="onFieldChange('rear', $event ? 'winter' : '')"
+          ></app-checkbox>
+        </div>
+
+        <div class="input-with-copy">
+          <app-input-field
+            label="Marque"
+            [value]="data.rearBrand"
+            (valueChange)="onFieldChange('rearBrand', $event)"
+            placeholder="Michelin"
+            [required]="!!data.rearTireCount && data.rearTireCount !== '0'"
+            [error]="errors.rearBrand"
+          ></app-input-field>
+          <button 
+            type="button"
+            *ngIf="data.frontBrand"
+            (click)="copyFrontBrandToRear()"
+            class="copy-button"
+            title="Copier la marque avant"
+          >
+            📋
+          </button>
+        </div>
+
+        <div class="input-with-copy">
+          <app-input-field
+            label="Profil"
+            [value]="data.rearModel"
+            (valueChange)="onFieldChange('rearModel', $event)"
+            placeholder="Primacy 5"
+            [required]="!!data.rearTireCount && data.rearTireCount !== '0'"
+            [error]="errors.rearModel"
+          ></app-input-field>
+          <button 
+            type="button"
+            *ngIf="data.frontModel"
+            (click)="copyFrontModelToRear()"
+            class="copy-button"
+            title="Copier le profil avant"
+          >
+            📋
+          </button>
+        </div>
+
+        <div class="dimension-row">
+          <div class="input-with-copy">
+            <app-input-field
+              label="Dimension"
+              [value]="data.rearDimension"
+              (valueChange)="onFieldChange('rearDimension', $event)"
+              placeholder="Ex: 195/60/R16"
+              [required]="!!data.rearTireCount && data.rearTireCount !== '0'"
+              [error]="errors.rearDimension"
+            ></app-input-field>
+            <button 
+              type="button"
+              *ngIf="data.frontDimension"
+              (click)="copyFrontDimensionToRear()"
+              class="copy-button"
+              title="Copier la dimension avant"
+            >
+              📋
+            </button>
+          </div>
+          <div class="input-with-copy">
+            <app-input-field
+              label="Indices"
+              [value]="data.rearIndex"
+              (valueChange)="onFieldChange('rearIndex', $event)"
+              placeholder="Ex: 96H"
+            ></app-input-field>
+            <button 
+              type="button"
+              *ngIf="data.frontIndex"
+              (click)="copyFrontIndexToRear()"
+              class="copy-button"
+              title="Copier les indices avant"
+            >
+              📋
+            </button>
+          </div>
+        </div>
+
+        <app-input-field
+          label="NB de pneus"
+          [value]="data.rearTireCount"
+          (valueChange)="onFieldChange('rearTireCount', $event)"
+          placeholder="Nombre"
+          type="number"
+          [required]="true"
+          [error]="errors.rearTireCount"
+        ></app-input-field>
       </div>
     </div>
+
+    <!-- Forfaits et services -->
+    <div class="collapsible-section">
+      <button 
+        class="section-header"
+        (click)="toggleServices()"
+        type="button"
+      >
+        <span>Forfaits et services</span>
+        <span class="arrow">{{ showServices ? '▲' : '▼' }}</span>
+      </button>
+      
+      <div *ngIf="showServices" class="section-content">
+        <table class="services-table">
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th>Quantité</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                Forfait MO <span class="required">*</span>
+              </td>
+              <td>
+                <input 
+                  type="number"
+                  [value]="data.laborCount"
+                  (input)="onFieldChange('laborCount', $any($event.target).value)"
+                  placeholder="Nombre"
+                  [class.error]="errors.laborCount"
+                  class="service-input"
+                />
+                <div *ngIf="errors.laborCount" class="error-text">{{ errors.laborCount }}</div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Valve <span class="required">*</span>
+              </td>
+              <td>
+                <input 
+                  type="number"
+                  [value]="data.valveCount"
+                  (input)="onFieldChange('valveCount', $any($event.target).value)"
+                  placeholder="Nombre"
+                  [class.error]="errors.valveCount"
+                  class="service-input"
+                />
+                <div *ngIf="errors.valveCount" class="error-text">{{ errors.valveCount }}</div>
+              </td>
+            </tr>
+            <tr>
+              <td>Azote</td>
+              <td>
+                <input 
+                  type="number"
+                  [value]="data.nitrogenCount"
+                  (input)="onFieldChange('nitrogenCount', $any($event.target).value)"
+                  placeholder="Nombre"
+                  class="service-input"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Rép. crevaison</td>
+              <td>
+                <input 
+                  type="number"
+                  [value]="data.punctureRepairCount"
+                  (input)="onFieldChange('punctureRepairCount', $any($event.target).value)"
+                  placeholder="Nombre"
+                  class="service-input"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Dépose / pose</td>
+              <td>
+                <input 
+                  type="number"
+                  [value]="data.mountingCount"
+                  (input)="onFieldChange('mountingCount', $any($event.target).value)"
+                  placeholder="Nombre"
+                  class="service-input"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Permutation</td>
+              <td>
+                <input 
+                  type="number"
+                  [value]="data.rotationCount"
+                  (input)="onFieldChange('rotationCount', $any($event.target).value)"
+                  placeholder="Nombre"
+                  class="service-input"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Options supplémentaires -->
+    <div class="collapsible-section">
+      <button 
+        class="section-header"
+        (click)="toggleOptions()"
+        type="button"
+      >
+        <span>Options supplémentaires</span>
+        <span class="arrow">{{ showOptions ? '▲' : '▼' }}</span>
+      </button>
+      
+      <div *ngIf="showOptions" class="section-content">
+        <div class="options-grid">
+          <app-checkbox
+            label="Assurance pneumatique"
+            [checked]="data.tireInsurance"
+            (checkedChange)="onFieldChange('tireInsurance', $event)"
+          ></app-checkbox>
+          <app-checkbox
+            label="Assurance dépannage"
+            [checked]="data.roadAssistance"
+            (checkedChange)="onFieldChange('roadAssistance', $event)"
+          ></app-checkbox>
+          <app-checkbox
+            label="Réutilisation valve élec."
+            [checked]="data.valveReuse"
+            (checkedChange)="onFieldChange('valveReuse', $event)"
+          ></app-checkbox>
+          <app-checkbox
+            label="Entretien valves élect."
+            [checked]="data.valveMaintenance"
+            (checkedChange)="onFieldChange('valveMaintenance', $event)"
+          ></app-checkbox>
+          <app-checkbox
+            label="Équilibrage type"
+            [checked]="data.balancingType"
+            (checkedChange)="onFieldChange('balancingType', $event)"
+          ></app-checkbox>
+          <app-checkbox
+            label="Géométrie type"
+            [checked]="data.geometryType"
+            (checkedChange)="onFieldChange('geometryType', $event)"
+          ></app-checkbox>
+          <app-checkbox
+            label="CONT. REG. AV-AR"
+            [checked]="data.contReg"
+            (checkedChange)="onFieldChange('contReg', $event)"
+          ></app-checkbox>
+        </div>
+        
+        <app-input-field
+          label="Accord mise au déchet (nombre de pneus)"
+          [value]="data.wasteAgreementCount"
+          (valueChange)="onFieldChange('wasteAgreementCount', $event)"
+          placeholder="Nombre de pneus"
+          type="number"
+        ></app-input-field>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <app-button
+        variant="secondary"
+        (buttonClick)="onPrevious()"
+      >
+        Précédent
+      </app-button>
+      
+      <app-button
+        variant="primary"
+        (buttonClick)="onNext()"
+      >
+        Suivant
+      </app-button>
+    </div>
   </div>
+</div>

@@ -1,64 +1,206 @@
 <div class="storage-container">
-    <h2 class="page-title">Gardiennage</h2>
-    
-    <div class="form-container">
-      <mat-card class="storage-section">
-        <mat-card-header>
-          <mat-card-title class="section-title">Entrée stock</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <app-checkbox
-            label="Roue complète"
-            [checked]="data.completeWheel"
-            (checkedChange)="onCheckboxChange('completeWheel', $event)"
-          ></app-checkbox>
+  <h2 class="page-title">GARDIENNAGE</h2>
   
-          <app-checkbox
-            label="Enjoliveur"
-            [checked]="data.hubcap"
-            (checkedChange)="onCheckboxChange('hubcap', $event)"
-          ></app-checkbox>
-  
-          <app-checkbox
-            label="Visserie"
-            [checked]="data.screws"
-            (checkedChange)="onCheckboxChange('screws', $event)"
-          ></app-checkbox>
-        </mat-card-content>
-      </mat-card>
-  
-      <div class="details-section">
-        <app-input-field
-          label="Profil (mm)"
-          [value]="data.profile"
-          (valueChange)="onFieldChange('profile', $event)"
-          placeholder="Entrez la valeur en mm"
-          type="number"
-        ></app-input-field>
-  
-        <app-input-field
-          label="Emplacement"
-          [value]="data.location"
-          (valueChange)="onFieldChange('location', $event)"
-          placeholder="Précisez l'emplacement"
-        ></app-input-field>
-      </div>
-  
-      <div class="button-container">
-        <app-button
-          variant="secondary"
-          (buttonClick)="onPrevious()"
-        >
-          Précédent
-        </app-button>
+  <div class="info-section">
+    <p class="info-text">
+      Le champ "Emplacement" ne peut être renseigné qu'une fois de retour
+      au centre. Veuillez cocher la case "De retour au centre" pour
+      activer ce champ.
+    </p>
+  </div>
+
+  <div class="form-container">
+    <div class="storage-grid">
+      <!-- Section Sortie Stock -->
+      <div class="storage-section">
+        <h3 class="section-title">Sortie stock</h3>
         
-        <app-button
-          variant="primary"
-          (buttonClick)="onFinish()"
-          icon="check"
-        >
-          Finaliser
-        </app-button>
+        <div class="section-content">
+          <app-input-field
+            label="Nombre de pneus"
+            [value]="completeData.outbound.count"
+            (valueChange)="updateOutboundData({ count: $event })"
+            placeholder="Nombre de pneus en sortie"
+            type="number"
+          ></app-input-field>
+
+          <div *ngIf="completeData.outbound.count && completeData.outbound.count !== '0'" class="details-section">
+            <div class="checkbox-group">
+              <app-checkbox
+                label="Roue"
+                [checked]="completeData.outbound.wheel"
+                (checkedChange)="updateOutboundData({ wheel: $event })"
+              ></app-checkbox>
+              <app-checkbox
+                label="Enjoliveur"
+                [checked]="completeData.outbound.hubcap"
+                (checkedChange)="updateOutboundData({ hubcap: $event })"
+              ></app-checkbox>
+              <app-checkbox
+                label="Visserie"
+                [checked]="completeData.outbound.screws"
+                (checkedChange)="updateOutboundData({ screws: $event })"
+              ></app-checkbox>
+            </div>
+
+            <app-input-field
+              label="Marque"
+              [value]="completeData.outbound.brand"
+              (valueChange)="updateOutboundData({ brand: $event })"
+              placeholder="Michelin"
+            ></app-input-field>
+
+            <app-input-field
+              label="Profil"
+              [value]="completeData.outbound.tireProfile"
+              (valueChange)="updateOutboundData({ tireProfile: $event })"
+              placeholder="Primacy 5"
+            ></app-input-field>
+
+            <app-input-field
+              label="Dimension"
+              [value]="completeData.outbound.dimension"
+              (valueChange)="updateOutboundData({ dimension: $event })"
+              placeholder="Ex: 205/55R16"
+            ></app-input-field>
+
+            <app-input-field
+              label="Profondeur des sculptures (mm)"
+              [value]="completeData.outbound.profile"
+              (valueChange)="updateOutboundData({ profile: $event })"
+              placeholder="Mesure en mm"
+            ></app-input-field>
+
+            <div class="back-at-center-section">
+              <app-checkbox
+                label="De retour au centre"
+                [checked]="completeData.outbound.isBackAtCenter"
+                (checkedChange)="updateOutboundData({ isBackAtCenter: $event })"
+              ></app-checkbox>
+            </div>
+
+            <div class="location-field" [class.disabled]="!completeData.outbound.isBackAtCenter">
+              <app-input-field
+                label="Emplacement"
+                [value]="completeData.outbound.location"
+                (valueChange)="updateOutboundData({ location: $event })"
+                placeholder="Précisez l'emplacement"
+                [disabled]="!completeData.outbound.isBackAtCenter"
+              ></app-input-field>
+              <p *ngIf="!completeData.outbound.isBackAtCenter" class="location-note">
+                L'emplacement sera à renseigner une fois de retour au centre
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Entrée Stock -->
+      <div class="storage-section">
+        <h3 class="section-title">Entrée stock</h3>
+        
+        <div class="section-content">
+          <app-input-field
+            label="Nombre de pneus"
+            [value]="completeData.inbound.count"
+            (valueChange)="updateInboundData({ count: $event })"
+            placeholder="Nombre de pneus en entrée"
+            type="number"
+          ></app-input-field>
+
+          <div *ngIf="completeData.inbound.count && completeData.inbound.count !== '0'" class="details-section">
+            <div class="checkbox-group">
+              <app-checkbox
+                label="Roue"
+                [checked]="completeData.inbound.wheel"
+                (checkedChange)="updateInboundData({ wheel: $event })"
+              ></app-checkbox>
+              <app-checkbox
+                label="Enjoliveur"
+                [checked]="completeData.inbound.hubcap"
+                (checkedChange)="updateInboundData({ hubcap: $event })"
+              ></app-checkbox>
+              <app-checkbox
+                label="Visserie"
+                [checked]="completeData.inbound.screws"
+                (checkedChange)="updateInboundData({ screws: $event })"
+              ></app-checkbox>
+            </div>
+
+            <app-input-field
+              label="Marque"
+              [value]="completeData.inbound.brand"
+              (valueChange)="updateInboundData({ brand: $event })"
+              placeholder="Michelin"
+              [required]="true"
+              [error]="errors.inboundBrand"
+            ></app-input-field>
+
+            <app-input-field
+              label="Profil"
+              [value]="completeData.inbound.tireProfile"
+              (valueChange)="updateInboundData({ tireProfile: $event })"
+              placeholder="Primacy 5"
+              [required]="true"
+              [error]="errors.inboundTireProfile"
+            ></app-input-field>
+
+            <app-input-field
+              label="Dimension"
+              [value]="completeData.inbound.dimension"
+              (valueChange)="updateInboundData({ dimension: $event })"
+              placeholder="Ex: 205/55R16"
+              [required]="true"
+              [error]="errors.inboundDimension"
+            ></app-input-field>
+
+            <app-input-field
+              label="Profondeur des sculptures (mm)"
+              [value]="completeData.inbound.profile"
+              (valueChange)="updateInboundData({ profile: $event })"
+              placeholder="Mesure en mm"
+            ></app-input-field>
+
+            <div class="back-at-center-section">
+              <app-checkbox
+                label="De retour au centre"
+                [checked]="completeData.inbound.isBackAtCenter"
+                (checkedChange)="updateInboundData({ isBackAtCenter: $event })"
+              ></app-checkbox>
+            </div>
+
+            <div class="location-field" [class.disabled]="!completeData.inbound.isBackAtCenter">
+              <app-input-field
+                label="Emplacement"
+                [value]="completeData.inbound.location"
+                (valueChange)="updateInboundData({ location: $event })"
+                placeholder="Précisez l'emplacement"
+                [disabled]="!completeData.inbound.isBackAtCenter"
+              ></app-input-field>
+              <p *ngIf="!completeData.inbound.isBackAtCenter" class="location-note">
+                L'emplacement sera à renseigner une fois de retour au centre
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <div class="button-container">
+      <app-button
+        variant="secondary"
+        (buttonClick)="onPrevious()"
+      >
+        Précédent
+      </app-button>
+      
+      <app-button
+        variant="primary"
+        (buttonClick)="onFinish()"
+        icon="check"
+      >
+        Finaliser
+      </app-button>
+    </div>
   </div>
+</div>

@@ -21,7 +21,8 @@ export class VehicleInfoComponent {
   @Input() data: VehicleInfo = {
     registration: '',
     brand: '',
-    mileage: ''
+    mileage: '',
+    model: ''
   };
   
   @Output() dataChange = new EventEmitter<VehicleInfo>();
@@ -38,14 +39,14 @@ export class VehicleInfoComponent {
   errors = {
     registration: '',
     brand: '',
-    mileage: ''
+    mileage: '',
+    model: ''
   };
 
   onFieldChange(field: keyof VehicleInfo, value: string): void {
     this.data = { ...this.data, [field]: value };
     this.dataChange.emit(this.data);
     
-    // Clear error when user starts typing
     if (this.errors[field as keyof typeof this.errors] !== undefined) {
       this.errors[field as keyof typeof this.errors] = '';
     }
@@ -55,7 +56,8 @@ export class VehicleInfoComponent {
     this.errors = {
       registration: '',
       brand: '',
-      mileage: ''
+      mileage: '',
+      model: ''
     };
 
     if (!this.data.registration.trim()) {
@@ -70,6 +72,10 @@ export class VehicleInfoComponent {
       this.errors.mileage = 'Le kilométrage est requis';
     } else if (isNaN(Number(this.data.mileage))) {
       this.errors.mileage = 'Le kilométrage doit être un nombre';
+    }
+
+    if (!this.data.model || !this.data.model.trim()) {
+      this.errors.model = 'Le modèle est requis';
     }
 
     return !Object.values(this.errors).some(error => error);

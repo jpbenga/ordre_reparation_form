@@ -42,7 +42,8 @@ export class RepairOrderFormComponent implements OnInit {
     vehicle: {
       registration: '',
       brand: '',
-      mileage: ''
+      mileage: '',
+      model: ''
     },
     condition: {
       frontLeft: '',
@@ -52,14 +53,57 @@ export class RepairOrderFormComponent implements OnInit {
     },
     tires: {
       front: '',
-      rear: ''
+      rear: '',
+      frontBrand: '',
+      rearBrand: '',
+      frontModel: '',
+      rearModel: '',
+      frontDimension: '',
+      rearDimension: '',
+      frontIndex: '',
+      rearIndex: '',
+      frontTireCount: '',
+      rearTireCount: '',
+      tireInsurance: false,
+      roadAssistance: false,
+      valveReuse: false,
+      valveMaintenance: false,
+      balancingType: false,
+      geometryType: false,
+      contReg: false,
+      wasteAgreementCount: '',
+      laborCount: '',
+      valveCount: '',
+      nitrogenCount: '',
+      punctureRepairCount: '',
+      mountingCount: '',
+      rotationCount: ''
     },
     storage: {
-      completeWheel: false,
-      hubcap: false,
-      screws: false,
-      profile: '',
-      location: ''
+      outbound: {
+        count: '',
+        wheel: false,
+        hubcap: false,
+        screws: false,
+        location: '',
+        profile: '',
+        dimension: '',
+        brand: '',
+        tireProfile: '',
+        isBackAtCenter: false
+      },
+      inbound: {
+        count: '',
+        wheel: false,
+        hubcap: false,
+        screws: false,
+        location: '',
+        profile: '',
+        dimension: '',
+        brand: '',
+        tireProfile: '',
+        isBackAtCenter: false
+      }
     }
   };
 
