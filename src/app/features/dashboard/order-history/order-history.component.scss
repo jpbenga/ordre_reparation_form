@@ -1,0 +1,252 @@
+.order-history-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333333;
+    margin: 0;
+  }
+  
+  .back-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #0054A4;
+    background: none;
+    border: none;
+    font-size: 0.875rem;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background-color: #f0f8ff;
+    }
+  }
+  
+  .info-section {
+    background-color: #dbeafe;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }
+  
+  .info-text {
+    font-size: 0.875rem;
+    color: #374151;
+    margin: 0;
+    line-height: 1.5;
+  }
+  
+  .filter-section {
+    margin-bottom: 24px;
+  }
+  
+  .filter-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .filter-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .calendar-icon {
+    width: 20px;
+    height: 20px;
+    color: #6b7280;
+  }
+  
+  .filter-text {
+    color: #374151;
+    font-size: 0.875rem;
+  }
+  
+  .date-input {
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 0.875rem;
+  }
+  
+  .reset-button {
+    font-size: 0.875rem;
+    color: #0054A4;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    
+    &:hover {
+      color: #004080;
+    }
+  }
+  
+  .empty-state {
+    background-color: #f9fafb;
+    border-radius: 8px;
+    padding: 64px 32px;
+    text-align: center;
+  }
+  
+  .empty-text {
+    color: #6b7280;
+    margin: 0;
+  }
+  
+  .date-group {
+    margin-bottom: 24px;
+  }
+  
+  .date-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #0054A4;
+    margin: 0 0 8px 0;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .order-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease;
+    
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  }
+  
+  .order-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .order-checkbox {
+    margin-top: 4px;
+  }
+  
+  .order-info {
+    flex: 1;
+  }
+  
+  .driver-name {
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    color: #333333;
+  }
+  
+  .vehicle-info {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0 0 4px 0;
+  }
+  
+  .company-info {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin: 0;
+  }
+  
+  .edit-button {
+    padding: 6px;
+    color: #3b82f6;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background-color: #dbeafe;
+    }
+  }
+  
+  .selected-section {
+    margin-top: 24px;
+    background-color: #f9fafb;
+    padding: 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .selected-text {
+    font-size: 0.875rem;
+    color: #374151;
+    margin: 0;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .order-history-container {
+      padding: 16px;
+    }
+  
+    .history-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+  
+    .page-title {
+      font-size: 1.5rem;
+    }
+  
+    .filter-container {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  
+    .order-content {
+      flex-direction: column;
+      gap: 8px;
+    }
+  
+    .edit-button {
+      align-self: flex-end;
+    }
+  
+    .selected-section {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }

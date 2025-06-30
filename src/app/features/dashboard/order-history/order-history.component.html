@@ -1,0 +1,100 @@
+<div class="order-history-container">
+    <div class="history-header">
+      <h2 class="page-title">Historique des ordres de réparation</h2>
+      <button 
+        class="back-button"
+        (click)="onBack()"
+      >
+        <mat-icon>arrow_back</mat-icon>
+        Retour au tableau de bord
+      </button>
+    </div>
+  
+    <div class="info-section">
+      <p class="info-text">
+        Consultez vos ordres de réparation des 30 derniers jours. Vous pouvez
+        les modifier ou les renvoyer pour facturation.
+      </p>
+    </div>
+  
+    <div class="filter-section">
+      <div class="filter-container">
+        <div class="filter-label">
+          <mat-icon class="calendar-icon">event</mat-icon>
+          <span class="filter-text">Filtrer par date:</span>
+        </div>
+        <input 
+          type="date" 
+          [value]="filterDate"
+          (change)="onFilterDateChange($event)"
+          class="date-input"
+        />
+        <button 
+          *ngIf="filterDate"
+          (click)="onResetFilter()"
+          class="reset-button"
+        >
+          Réinitialiser
+        </button>
+      </div>
+    </div>
+  
+    <div *ngIf="Object.keys(ordersByDate).length === 0" class="empty-state">
+      <p class="empty-text">
+        Aucun ordre de réparation dans l'historique
+      </p>
+    </div>
+  
+    <div *ngIf="Object.keys(ordersByDate).length > 0">
+      <div *ngFor="let dateEntry of sortedDateEntries" class="date-group">
+        <h3 class="date-title">
+          {{ formatDate(dateEntry[0]) }}
+        </h3>
+        
+        <div class="orders-list">
+          <div 
+            *ngFor="let order of dateEntry[1]" 
+            class="order-card"
+          >
+            <div class="order-content">
+              <input 
+                type="checkbox"
+                [checked]="selectedOrders.includes(order.id)"
+                (change)="onOrderSelection(order.id)"
+                class="order-checkbox"
+              />
+              
+              <div class="order-info">
+                <p class="driver-name">
+                  {{ order.driver.firstName }} {{ order.driver.lastName }}
+                </p>
+                <p class="vehicle-info">
+                  {{ order.vehicle.brand }} - {{ order.vehicle.registration }}
+                </p>
+                <p class="company-info">
+                  {{ order.driver.company || 'Particulier' }}
+                </p>
+              </div>
+              
+              <button 
+                (click)="onEdit(order.id)"
+                class="edit-button"
+                title="Modifier cet ordre"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div *ngIf="selectedOrders.length > 0" class="selected-section">
+        <p class="selected-text">
+          {{ selectedOrders.length }} ordre(s) sélectionné(s)
+        </p>
+        <app-button (buttonClick)="onSendSelected()" icon="send">
+          Envoyer pour facturation
+        </app-button>
+      </div>
+    </div>
+  </div>

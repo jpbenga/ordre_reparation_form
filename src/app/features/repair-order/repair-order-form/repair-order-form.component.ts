@@ -2,7 +2,6 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RepairOrder, TechnicianInfo } from '../../../shared/models/repair-order.model';
 import { ProgressBarComponent } from '../../../shared/components/progress-bar/progress-bar.component';
-import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { DriverInfoComponent } from '../driver-info/driver-info.component';
 import { VehicleInfoComponent } from '../vehicle-info/vehicle-info.component';
 import { VehicleConditionComponent } from '../vehicle-condition/vehicle-condition.component';
@@ -15,7 +14,6 @@ import { StorageComponent } from '../storage/storage.component';
   imports: [
     CommonModule,
     ProgressBarComponent,
-    ButtonComponent,
     DriverInfoComponent,
     VehicleInfoComponent,
     VehicleConditionComponent,

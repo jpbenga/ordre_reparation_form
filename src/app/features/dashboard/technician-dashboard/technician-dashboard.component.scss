@@ -1,235 +1,246 @@
 .dashboard-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    animation: fadeIn 0.3s ease-in-out;
-  }
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333333;
+  margin: 0;
+}
+
+.date-info {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.technician-card {
+  margin-bottom: 24px;
+  background-color: #f0f8ff;
+  border-left: 4px solid #0054A4;
+}
+
+.technician-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #0054A4;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.tech-details {
+  flex: 1;
+}
+
+.tech-name {
+  font-weight: 600;
+  margin: 0;
+  color: #333333;
+}
+
+.tech-role {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.orders-section {
+  margin-top: 24px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333333;
+  margin: 0;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.empty-state {
+  background-color: #f9fafb;
+  border-radius: 8px;
+  padding: 64px 32px;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #9ca3af;
+  margin-bottom: 12px;
+}
+
+.empty-text {
+  color: #6b7280;
+  font-size: 1rem;
+  margin: 0 0 4px 0;
+}
+
+.empty-subtext {
+  color: #9ca3af;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.company-group {
+  margin-bottom: 24px;
+}
+
+.company-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0054A4;
+  margin: 0 0 8px 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.order-card {
+  transition: box-shadow 0.2s ease;
   
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.order-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.order-info {
+  flex: 1;
+}
+
+.driver-name {
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: #333333;
+}
+
+.vehicle-info {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0 0 4px 0;
+}
+
+.tire-info {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.order-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.edit-btn {
+  color: #3b82f6;
+  
+  &:hover {
+    background-color: #dbeafe;
+  }
+}
+
+.delete-btn {
+  color: #ef4444;
+  
+  &:hover {
+    background-color: #fee2e2;
+  }
+}
+
+.billing-section {
+  margin-top: 32px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .dashboard-container {
+    padding: 16px;
+  }
+
   .dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
-  
+
   .page-title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333333;
-    margin: 0;
+    font-size: 1.5rem;
   }
-  
-  .date-info {
-    font-size: 0.875rem;
-    color: #6b7280;
-  }
-  
-  .technician-card {
-    margin-bottom: 24px;
-    background-color: #f0f8ff;
-    border-left: 4px solid #0054A4;
-  }
-  
-  .technician-info {
-    display: flex;
-    align-items: center;
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
     gap: 12px;
   }
-  
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #0054A4;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 1.25rem;
+
+  .header-buttons {
+    width: 100%;
+    justify-content: flex-start;
   }
-  
-  .tech-details {
-    flex: 1;
-  }
-  
-  .tech-name {
-    font-weight: 600;
-    margin: 0;
-    color: #333333;
-  }
-  
-  .tech-role {
-    font-size: 0.875rem;
-    color: #6b7280;
-    margin: 0;
-  }
-  
-  .orders-section {
-    margin-top: 24px;
-  }
-  
-  .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-  
-  .section-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #333333;
-    margin: 0;
-  }
-  
-  .empty-state {
-    background-color: #f9fafb;
-    border-radius: 8px;
-    padding: 64px 32px;
-    text-align: center;
-  }
-  
-  .empty-icon {
-    font-size: 48px;
-    width: 48px;
-    height: 48px;
-    color: #9ca3af;
-    margin-bottom: 12px;
-  }
-  
-  .empty-text {
-    color: #6b7280;
-    font-size: 1rem;
-    margin: 0 0 4px 0;
-  }
-  
-  .empty-subtext {
-    color: #9ca3af;
-    font-size: 0.875rem;
-    margin: 0;
-  }
-  
-  .company-group {
-    margin-bottom: 24px;
-  }
-  
-  .company-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #0054A4;
-    margin: 0 0 8px 0;
-    padding-bottom: 4px;
-    border-bottom: 1px solid #e5e7eb;
-  }
-  
-  .orders-list {
-    display: flex;
+
+  .order-content {
     flex-direction: column;
     gap: 12px;
   }
-  
-  .order-card {
-    transition: box-shadow 0.2s ease;
-    
-    &:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-  }
-  
-  .order-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-  
-  .order-info {
-    flex: 1;
-  }
-  
-  .driver-name {
-    font-weight: 600;
-    margin: 0 0 4px 0;
-    color: #333333;
-  }
-  
-  .vehicle-info {
-    font-size: 0.875rem;
-    color: #6b7280;
-    margin: 0 0 4px 0;
-  }
-  
-  .tire-info {
-    font-size: 0.75rem;
-    color: #9ca3af;
-    margin: 0;
-  }
-  
+
   .order-actions {
-    display: flex;
-    gap: 4px;
+    align-self: flex-end;
   }
-  
-  .edit-btn {
-    color: #3b82f6;
-    
-    &:hover {
-      background-color: #dbeafe;
-    }
-  }
-  
-  .delete-btn {
-    color: #ef4444;
-    
-    &:hover {
-      background-color: #fee2e2;
-    }
-  }
-  
-  .billing-section {
-    margin-top: 32px;
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @media (max-width: 640px) {
-    .dashboard-container {
-      padding: 16px;
-    }
-  
-    .dashboard-header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
-    }
-  
-    .page-title {
-      font-size: 1.5rem;
-    }
-  
-    .section-header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 12px;
-    }
-  
-    .order-content {
-      flex-direction: column;
-      gap: 12px;
-    }
-  
-    .order-actions {
-      align-self: flex-end;
-    }
-  }
+}

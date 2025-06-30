@@ -7,8 +7,9 @@ import { TechnicianInfoComponent } from '../features/technician/technician-info/
 import { TechnicianDashboardComponent } from '../features/dashboard/technician-dashboard/technician-dashboard.component';
 import { RepairOrderFormComponent } from '../features/repair-order/repair-order-form/repair-order-form.component';
 import { RepairOrderSummaryComponent } from '../features/dashboard/repair-order-summary/repair-order-summary.component';
+import { OrderHistoryComponent } from '../features/dashboard/order-history/order-history.component';
 
-type AppView = 'technician-login' | 'dashboard' | 'new-order' | 'edit-order' | 'summary';
+type AppView = 'technician-login' | 'dashboard' | 'new-order' | 'edit-order' | 'summary' | 'history';
 
 @Component({
   selector: 'app-container',
@@ -19,7 +20,8 @@ type AppView = 'technician-login' | 'dashboard' | 'new-order' | 'edit-order' | '
     TechnicianInfoComponent,
     TechnicianDashboardComponent,
     RepairOrderFormComponent,
-    RepairOrderSummaryComponent
+    RepairOrderSummaryComponent,
+    OrderHistoryComponent
   ],
   templateUrl: './app-container.component.html',
   styleUrl: './app-container.component.scss'
@@ -58,7 +60,14 @@ export class AppContainerComponent implements OnInit {
 
   // Navigation vers l'édition d'un ordre existant
   onEditOrder(orderId: string): void {
-    const orderToEdit = this.repairOrders.find(order => order.id === orderId);
+    // Chercher d'abord dans les ordres actifs
+    let orderToEdit: RepairOrder | null = this.repairOrders.find(order => order.id === orderId) || null;
+    
+    // Si non trouvé, chercher dans l'historique
+    if (!orderToEdit && this.technicianInfo) {
+      orderToEdit = this.repairOrderService.getOrderFromHistory(orderId, this.technicianInfo.name);
+    }
+    
     if (orderToEdit) {
       this.currentEditingOrder = orderToEdit;
       this.currentView = 'edit-order';
@@ -95,13 +104,22 @@ export class AppContainerComponent implements OnInit {
     this.currentView = 'summary';
   }
 
+  // Navigation vers l'historique
+  onViewHistory(): void {
+    this.currentView = 'history';
+  }
+
   // Envoi pour facturation
-  onSendForBilling(): void {
-    const orderCount = this.repairOrders.length;
+  onSendForBilling(ordersToSend?: RepairOrder[]): void {
+    const ordersToProcess = ordersToSend || this.repairOrders;
+    const orderCount = ordersToProcess.length;
     
     if (orderCount > 0) {
       alert(`${orderCount} ordres de réparation envoyés pour facturation.`);
-      this.repairOrderService.clearAllOrders();
+      
+      // Utiliser la logique du service pour la facturation
+      this.repairOrderService.sendOrdersForBilling(ordersToSend);
+      
       this.currentView = 'dashboard';
     }
   }

@@ -25,6 +25,7 @@ export class TechnicianDashboardComponent {
   @Output() editOrder = new EventEmitter<string>();
   @Output() deleteOrder = new EventEmitter<string>();
   @Output() sendForBilling = new EventEmitter<void>();
+  @Output() viewHistory = new EventEmitter<void>();
 
   get ordersByCompany(): { [company: string]: RepairOrder[] } {
     return this.repairOrders.reduce((acc, order) => {
@@ -59,6 +60,10 @@ export class TechnicianDashboardComponent {
     if (confirm(`Envoyer ${this.repairOrders.length} ordres de réparation pour facturation ?`)) {
       this.sendForBilling.emit();
     }
+  }
+
+  onViewHistory(): void {
+    this.viewHistory.emit();
   }
 
   getTireTypeLabel(type: string): string {
