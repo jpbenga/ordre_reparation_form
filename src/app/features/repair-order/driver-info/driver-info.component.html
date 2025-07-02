@@ -1,39 +1,41 @@
 <div class="driver-info-container">
-    <h2 class="page-title">Informations du conducteur</h2>
-    
-    <div class="form-container">
-      <app-input-field
-        label="Nom"
-        [value]="data.lastName"
-        (valueChange)="onFieldChange('lastName', $event)"
-        placeholder="Entrez le nom"
-        [required]="true"
-        [error]="errors.lastName"
-      ></app-input-field>
+  <h2 class="page-title">Informations du conducteur</h2>
   
-      <app-input-field
-        label="Prénom"
-        [value]="data.firstName"
-        (valueChange)="onFieldChange('firstName', $event)"
-        placeholder="Entrez le prénom"
-        [required]="true"
-        [error]="errors.firstName"
-      ></app-input-field>
-  
-      <app-input-field
-        label="Société"
-        [value]="data.company"
-        (valueChange)="onFieldChange('company', $event)"
-        placeholder="Entrez le nom de la société (optionnel)"
-      ></app-input-field>
-  
-      <div class="button-container">
-        <app-button
-          variant="primary"
-          (buttonClick)="onNext()"
-        >
-          Suivant
-        </app-button>
-      </div>
+  <div class="form-container">
+    <app-input-field
+      label="Nom"
+      [value]="data.lastName"
+      (valueChange)="onFieldChange('lastName', $event)"
+      placeholder="Entrez le nom"
+      [required]="true"
+      [error]="errors.lastName"
+    ></app-input-field>
+
+    <app-input-field
+      label="Prénom"
+      [value]="data.firstName"
+      (valueChange)="onFieldChange('firstName', $event)"
+      placeholder="Entrez le prénom"
+      [required]="true"
+      [error]="errors.firstName"
+    ></app-input-field>
+
+    <app-input-field
+      label="Société"
+      [value]="data.company"
+      (valueChange)="onFieldChange('company', $event)"
+      placeholder="Entrez le nom de la société"
+      [required]="true"
+      [error]="errors.company"
+    ></app-input-field>
+
+    <div class="button-container">
+      <app-button
+        variant="primary"
+        (buttonClick)="onNext()"
+      >
+        Suivant
+      </app-button>
     </div>
   </div>
+</div>

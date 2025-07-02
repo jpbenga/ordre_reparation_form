@@ -7,102 +7,122 @@
   <mat-card class="technician-card">
     <mat-card-content>
       <div class="technician-info">
-        <div class="avatar">
-          {{ technicianInfo.name.charAt(0).toUpperCase() }}
-        </div>
+        <div class="avatar">{{ technicianInfo.name.charAt(0).toUpperCase() }}</div>
         <div class="tech-details">
           <p class="tech-name">{{ technicianInfo.name }}</p>
           <p class="tech-role">Technicien</p>
         </div>
+        <button (click)="onShowHelp()" class="help-button-proto">
+          <mat-icon>help_outline</mat-icon>
+          <span>Aide</span>
+        </button>
       </div>
     </mat-card-content>
   </mat-card>
 
-  <div class="orders-section">
+  <div class="header-buttons-container">
+    <app-button variant="primary" (buttonClick)="onStartNew()" icon="add">Nouvel ordre</app-button>
+    <app-button variant="secondary" (buttonClick)="onViewHistory()" icon="history">Historique</app-button>
+  </div>
+
+  <div *ngIf="ordersToFinalize.length > 0" class="finalize-section">
     <div class="section-header">
       <h3 class="section-title">
-        Ordres de réparation en cours ({{ repairOrders.length }})
+        <mat-icon class="finalize-icon">error_outline</mat-icon>
+        Ordres à finaliser ({{ ordersToFinalize.length }})
       </h3>
-      <div class="header-buttons">
-        <app-button
-          variant="primary"
-          (buttonClick)="onStartNew()"
-          icon="add"
-        >
-          Nouvel ordre
-        </app-button>
-        <app-button
-          variant="secondary"
-          (buttonClick)="onViewHistory()"
-          icon="history"
-        >
-          Historique
-        </app-button>
-      </div>
     </div>
-
-    <div *ngIf="repairOrders.length === 0" class="empty-state">
-      <mat-icon class="empty-icon">description</mat-icon>
-      <p class="empty-text">Aucun ordre de réparation en cours</p>
-      <p class="empty-subtext">Cliquez sur "Nouvel ordre" pour commencer ou consultez l'historique</p>
+    <div class="finalize-info-box">
+      Ces ordres ont des pneus marqués comme "De retour au centre" mais l'emplacement n'a pas été renseigné.
     </div>
-
-    <div *ngFor="let companyEntry of companyEntries" class="company-group">
-      <h4 class="company-title">{{ companyEntry[0] }}</h4>
-      
+    <div *ngFor="let companyEntry of finalizeCompanyEntries" class="company-group">
+      <h4 class="company-title-finalize">{{ companyEntry[0] }}</h4>
       <div class="orders-list">
-        <mat-card 
-          *ngFor="let order of companyEntry[1]" 
-          class="order-card"
-        >
+        <mat-card *ngFor="let order of companyEntry[1]" class="order-card-finalize">
           <mat-card-content>
-            <div class="order-content">
+            <div *ngIf="editingLocationOrder?.id !== order.id" class="order-content">
               <div class="order-info">
-                <p class="driver-name">
-                  {{ order.driver.firstName }} {{ order.driver.lastName }}
-                </p>
-                <p class="vehicle-info">
-                  {{ order.vehicle.brand }} - {{ order.vehicle.registration }}
-                </p>
-                <p class="tire-info" *ngIf="order.tires.front || order.tires.rear">
-                  <span *ngIf="order.tires.front">AV: {{ getTireTypeLabel(order.tires.front) }}</span>
-                  <span *ngIf="order.tires.front && order.tires.rear">, </span>
-                  <span *ngIf="order.tires.rear">AR: {{ getTireTypeLabel(order.tires.rear) }}</span>
-                </p>
+                <p class="driver-name">{{ order.driver.firstName }} {{ order.driver.lastName }} <span class="finalize-badge">À finaliser</span></p>
+                <p class="vehicle-info">{{ order.vehicle.brand }} - {{ order.vehicle.registration }}</p>
+                <button mat-stroked-button color="warn" (click)="startEditingLocation(order)" class="location-button-mat">
+                  <mat-icon>location_on</mat-icon>
+                  <span>Cliquez pour renseigner l'emplacement</span>
+                </button>
               </div>
-              
               <div class="order-actions">
-                <button 
-                  mat-icon-button
-                  (click)="onEdit(order.id)"
-                  class="edit-btn"
-                  title="Modifier"
-                >
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button 
-                  mat-icon-button
-                  (click)="onDelete(order.id)"
-                  class="delete-btn"
-                  title="Supprimer"
-                >
-                  <mat-icon>delete</mat-icon>
-                </button>
+                <button mat-icon-button (click)="onEdit(order.id)" class="edit-btn" title="Modifier"><mat-icon>edit</mat-icon></button>
+                <button mat-icon-button (click)="onDelete(order.id)" class="delete-btn" title="Supprimer"><mat-icon>delete</mat-icon></button>
+              </div>
+            </div>
+            <div *ngIf="editingLocationOrder?.id === order.id" class="location-edit-form">
+              <div class="location-edit-header">
+                <h4><mat-icon>location_on</mat-icon> Renseigner les emplacements</h4>
+                <button mat-icon-button (click)="cancelEditingLocation()" title="Annuler"><mat-icon>close</mat-icon></button>
+              </div>
+              <div *ngIf="order.storage?.outbound?.isBackAtCenter && order.storage?.outbound?.count">
+                <mat-form-field appearance="outline" class="location-input-field">
+                  <mat-label>Emplacement sortie stock ({{order.storage.outbound.count}} pneus)</mat-label>
+                  <input matInput [(ngModel)]="tempOutboundLocation" placeholder="Ex: Rack A-12">
+                </mat-form-field>
+              </div>
+              <div *ngIf="order.storage?.inbound?.isBackAtCenter && order.storage?.inbound?.count">
+                <mat-form-field appearance="outline" class="location-input-field">
+                  <mat-label>Emplacement entrée stock ({{order.storage.inbound.count}} pneus)</mat-label>
+                  <input matInput [(ngModel)]="tempInboundLocation" placeholder="Ex: Rack B-05">
+                </mat-form-field>
+              </div>
+              <div class="form-actions">
+                 <button mat-button (click)="cancelEditingLocation()">Annuler</button>
+                 <button mat-flat-button color="warn" (click)="saveLocation()">
+                    <mat-icon>save</mat-icon>
+                    <span>Enregistrer</span>
+                 </button>
               </div>
             </div>
           </mat-card-content>
         </mat-card>
       </div>
     </div>
+  </div>
 
-    <div *ngIf="repairOrders.length > 0" class="billing-section">
-      <app-button
-        variant="primary"
-        (buttonClick)="onSendForBilling()"
-        icon="send"
-      >
-        Envoyer pour facturation
-      </app-button>
+  <div class="orders-section">
+    <div class="section-header">
+      <h3 class="section-title">
+        <mat-icon class="regular-icon">check_circle_outline</mat-icon>
+        Ordres de réparation en cours ({{ regularOrders.length }})
+      </h3>
     </div>
+    <div *ngIf="repairOrders.length === 0" class="empty-state">
+      <mat-icon class="empty-icon">description</mat-icon>
+      <p class="empty-text">Aucun ordre de réparation en cours</p>
+    </div>
+    <div *ngIf="regularOrders.length === 0 && ordersToFinalize.length > 0" class="empty-state">
+        <p class="empty-text">Tous les ordres nécessitent une finalisation</p>
+    </div>
+    <div *ngFor="let companyEntry of regularCompanyEntries" class="company-group">
+      <h4 class="company-title">{{ companyEntry[0] }}</h4>
+      <div class="orders-list">
+        <mat-card *ngFor="let order of companyEntry[1]" class="order-card">
+          <mat-card-content>
+            <div class="order-content">
+              <div class="order-info">
+                <p class="driver-name">{{ order.driver.firstName }} {{ order.driver.lastName }}</p>
+                <p class="vehicle-info">{{ order.vehicle.brand }} - {{ order.vehicle.registration }}</p>
+              </div>
+              <div class="order-actions">
+                <button mat-icon-button (click)="onEdit(order.id)" class="edit-btn" title="Modifier"><mat-icon>edit</mat-icon></button>
+                <button mat-icon-button (click)="onDelete(order.id)" class="delete-btn" title="Supprimer"><mat-icon>delete</mat-icon></button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="repairOrders.length > 0" class="billing-section">
+    <app-button variant="primary" (buttonClick)="onSendForBilling()" icon="send">
+      Envoyer pour facturation
+    </app-button>
   </div>
 </div>

@@ -1,0 +1,27 @@
+<div class="onboarding-overlay">
+    <div class="onboarding-modal">
+      <div class="skip-button-container">
+        <button (click)="handleSkip()">Ignorer</button>
+      </div>
+      <div class="onboarding-content">
+        <mat-icon class="step-icon">{{ steps[currentStep].icon }}</mat-icon>
+        <h2 class="step-title">{{ steps[currentStep].title }}</h2>
+        <p class="step-description">{{ steps[currentStep].description }}</p>
+        <div *ngIf="steps[currentStep].footer" class="step-footer">
+          <p>{{ steps[currentStep].footer }}</p>
+        </div>
+      </div>
+      <div class="onboarding-footer">
+        <div class="dots-container">
+          <span *ngFor="let step of steps; let i = index" 
+                class="dot"
+                [class.active]="i === currentStep">
+          </span>
+        </div>
+        <button mat-raised-button color="primary" (click)="handleNext()">
+          {{ currentStep < steps.length - 1 ? 'Suivant' : 'Commencer' }}
+          <mat-icon *ngIf="currentStep < steps.length - 1">arrow_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>

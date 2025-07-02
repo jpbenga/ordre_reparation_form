@@ -1,27 +1,26 @@
 <div class="app-container">
   <app-header></app-header>
-  
+
   <main class="main-content">
-    <!-- Identification du technicien -->
-    <app-technician-info 
+    <app-technician-info
       *ngIf="currentView === 'technician-login'"
       (submitTechnician)="onTechnicianLogin($event)"
     ></app-technician-info>
 
-    <!-- Tableau de bord -->
-    <app-technician-dashboard 
+    <app-technician-dashboard
       *ngIf="currentView === 'dashboard'"
       [technicianInfo]="technicianInfo!"
       [repairOrders]="repairOrders"
       (startNewOrder)="onStartNewOrder()"
       (editOrder)="onEditOrder($event)"
+      (updateOrder)="onUpdateOrder($event)"
       (deleteOrder)="onDeleteOrder($event)"
       (sendForBilling)="onSendForBilling()"
       (viewHistory)="onViewHistory()"
+      (showHelp)="onShowHelp()"
     ></app-technician-dashboard>
 
-    <!-- Historique des ordres -->
-    <app-order-history 
+    <app-order-history
       *ngIf="currentView === 'history'"
       [technicianName]="technicianInfo?.name || ''"
       (backToDashboard)="onBackToDashboard()"
@@ -29,8 +28,7 @@
       (sendForBilling)="onSendForBilling($event)"
     ></app-order-history>
 
-    <!-- Formulaire de création d'ordre -->
-    <app-repair-order-form 
+    <app-repair-order-form
       *ngIf="currentView === 'new-order'"
       [technicianInfo]="technicianInfo!"
       [editingOrder]="null"
@@ -38,8 +36,7 @@
       (saveOrder)="onSaveOrder($event)"
     ></app-repair-order-form>
 
-    <!-- Formulaire d'édition d'ordre -->
-    <app-repair-order-form 
+    <app-repair-order-form
       *ngIf="currentView === 'edit-order'"
       [technicianInfo]="technicianInfo!"
       [editingOrder]="currentEditingOrder"
@@ -47,20 +44,26 @@
       (saveOrder)="onSaveOrder($event)"
     ></app-repair-order-form>
 
-    <!-- Récapitulatif des ordres -->
-    <app-repair-order-summary 
+    <app-repair-order-summary
       *ngIf="currentView === 'summary'"
       [repairOrders]="repairOrders"
       (backToDashboard)="onBackToDashboard()"
       (sendForBilling)="onSendForBilling()"
     ></app-repair-order-summary>
   </main>
-  
-  <!-- Debug info (à supprimer en production) -->
+
+  <app-footer></app-footer>
+
+  <app-onboarding
+    *ngIf="showOnboarding"
+    (complete)="onOnboardingComplete()"
+    (skip)="onOnboardingSkip()">
+  </app-onboarding>
+
   <div class="debug-info" *ngIf="technicianInfo">
     <small>
-      Vue: {{ currentView }} | 
-      Technicien: {{ technicianInfo.name }} | 
+      Vue: {{ currentView }} |
+      Technicien: {{ technicianInfo.name }} |
       Ordres: {{ repairOrders.length }}
     </small>
   </div>

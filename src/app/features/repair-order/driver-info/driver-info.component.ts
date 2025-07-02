@@ -27,14 +27,14 @@ export class DriverInfoComponent {
 
   errors = {
     firstName: '',
-    lastName: ''
+    lastName: '',
+    company: ''
   };
 
   onFieldChange(field: keyof DriverInfo, value: string): void {
     this.data = { ...this.data, [field]: value };
     this.dataChange.emit(this.data);
     
-    // Clear error when user starts typing
     if (this.errors[field as keyof typeof this.errors] !== undefined) {
       this.errors[field as keyof typeof this.errors] = '';
     }
@@ -43,7 +43,8 @@ export class DriverInfoComponent {
   validate(): boolean {
     this.errors = {
       firstName: '',
-      lastName: ''
+      lastName: '',
+      company: ''
     };
 
     if (!this.data.firstName.trim()) {
@@ -52,6 +53,10 @@ export class DriverInfoComponent {
 
     if (!this.data.lastName.trim()) {
       this.errors.lastName = 'Le nom est requis';
+    }
+
+    if (!this.data.company.trim()) {
+      this.errors.company = 'La société est requise';
     }
 
     return !Object.values(this.errors).some(error => error);
