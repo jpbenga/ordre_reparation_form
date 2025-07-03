@@ -10,6 +10,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { SignatureModalComponent } from '../../../shared/components/signature-modal/signature-modal.component';
+import { RepairOrderService } from '../../../core/services/repair-order.service';
+import { generateMockOrder } from '../../../core/utils/mock-data';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-technician-dashboard',
@@ -22,7 +26,8 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSnackBarModule
   ],
   templateUrl: './technician-dashboard.component.html',
   styleUrls: ['./technician-dashboard.component.scss']
@@ -38,6 +43,7 @@ export class TechnicianDashboardComponent implements OnChanges {
   @Output() sendForBilling = new EventEmitter<void>();
   @Output() viewHistory = new EventEmitter<void>();
   @Output() showHelp = new EventEmitter<void>();
+  @Output() exportOrder = new EventEmitter<RepairOrder>();
 
   ordersToFinalize: RepairOrder[] = [];
   regularOrders: RepairOrder[] = [];
@@ -50,12 +56,24 @@ export class TechnicianDashboardComponent implements OnChanges {
   tempOutboundLocation: string = '';
   tempInboundLocation: string = '';
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private repairOrderService: RepairOrderService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['repairOrders']) {
       this.updateOrderLists();
     }
+  }
+
+  generateMockData(): void {
+    for (let i = 0; i < 15; i++) {
+        const mockOrder = generateMockOrder(this.technicianInfo.name);
+        this.repairOrderService.addRepairOrderToHistoryOnly(mockOrder);
+    }
+    this.snackBar.open('15 ordres fictifs ont été ajoutés à l\'historique.', 'Fermer', { duration: 3000 });
   }
 
   private updateOrderLists(): void {
@@ -140,9 +158,7 @@ export class TechnicianDashboardComponent implements OnChanges {
       alert("Impossible d'envoyer pour facturation : certains ordres ont des emplacements à renseigner.");
       return;
     }
-    if (confirm(`Envoyer ${this.repairOrders.length} ordres de réparation pour facturation ?`)) {
-      this.sendForBilling.emit();
-    }
+    this.sendForBilling.emit();
   }
 
   onViewHistory(): void {
@@ -160,5 +176,22 @@ export class TechnicianDashboardComponent implements OnChanges {
       case 'allSeason': return '4 Saisons';
       default: return type;
     }
+  }
+
+  openSignatureModal(order: RepairOrder): void {
+    const dialogRef = this.dialog.open(SignatureModalComponent, {
+      width: '500px',
+      data: {
+        title: `Signature - ${order.driver.firstName} ${order.driver.lastName}`,
+        initialSignature: order.signature
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(signatureData => {
+      if (signatureData) {
+        const updatedOrder = { ...order, signature: signatureData };
+        this.updateOrder.emit(updatedOrder);
+      }
+    });
   }
 }

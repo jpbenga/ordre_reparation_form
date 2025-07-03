@@ -11,10 +11,13 @@ import { OrderHistoryComponent } from '../features/dashboard/order-history/order
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { OnboardingComponent } from '../features/onboarding/onboarding.component';
 import { FormsModule } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FooterComponent } from '../shared/components/footer/footer.component';
+import { EmailSendModalComponent } from '../shared/components/email-send-modal/email-send-modal.component';
+import { OrderDataExportComponent } from '../features/dashboard/order-data-export/order-data-export.component';
+import { SignatureModalComponent } from '../shared/components/signature-modal/signature-modal.component';
 
 type AppView = 'technician-login' | 'dashboard' | 'new-order' | 'edit-order' | 'summary' | 'history';
 
@@ -34,7 +37,8 @@ type AppView = 'technician-login' | 'dashboard' | 'new-order' | 'edit-order' | '
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    FooterComponent
+    FooterComponent,
+    OrderDataExportComponent
   ],
   templateUrl: './app-container.component.html',
   styleUrls: ['./app-container.component.scss']
@@ -43,13 +47,15 @@ export class AppContainerComponent implements OnInit {
   currentView: AppView = 'technician-login';
   currentEditingOrder: RepairOrder | null = null;
   showOnboarding = false;
+  exportedOrder: RepairOrder | null = null;
 
   technicianInfo: TechnicianInfo | null = null;
   repairOrders: RepairOrder[] = [];
 
   constructor(
     private repairOrderService: RepairOrderService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -139,13 +145,24 @@ export class AppContainerComponent implements OnInit {
 
   onSendForBilling(ordersToSend?: RepairOrder[]): void {
     const ordersToProcess = ordersToSend || this.repairOrders;
-    const orderCount = ordersToProcess.length;
-    
-    if (orderCount > 0) {
-      alert(`${orderCount} ordres de réparation envoyés pour facturation.`);
-      this.repairOrderService.sendOrdersForBilling(ordersToSend);
-      this.currentView = 'dashboard';
+    if (ordersToProcess.length === 0) {
+      return;
     }
+
+    const dialogRef = this.dialog.open(EmailSendModalComponent, {
+      width: '500px',
+      data: {
+        ordersCount: ordersToProcess.length,
+        recipientEmail: 'facturation@euromaster.com'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(isSent => {
+      if (isSent) {
+        this.repairOrderService.sendOrdersForBilling(ordersToProcess);
+        this.currentView = 'dashboard';
+      }
+    });
   }
   
   onLogout(): void {
@@ -159,5 +176,34 @@ export class AppContainerComponent implements OnInit {
   
   onShowHelp(): void {
     this.showOnboarding = true;
+  }
+
+  onExportOrder(order: RepairOrder): void {
+    this.exportedOrder = order;
+  }
+
+  onCloseExport(): void {
+    this.exportedOrder = null;
+  }
+
+  onAddSignatureFromExport(orderId: string): void {
+    const order = this.repairOrders.find(o => o.id === orderId) || this.repairOrderService.getOrderFromHistory(orderId, this.technicianInfo!.name);
+    if (order) {
+        this.onCloseExport();
+        const dialogRef = this.dialog.open(SignatureModalComponent, {
+          width: '500px',
+          data: {
+            title: `Signature - ${order.driver.firstName} ${order.driver.lastName}`,
+            initialSignature: order.signature
+          }
+        });
+
+        dialogRef.afterClosed().subscribe(signatureData => {
+          if (signatureData) {
+            const updatedOrder = { ...order, signature: signatureData };
+            this.repairOrderService.updateRepairOrder(updatedOrder);
+          }
+        });
+    }
   }
 }

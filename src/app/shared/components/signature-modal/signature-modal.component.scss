@@ -1,0 +1,20 @@
+.signature-modal-content {
+    padding: 0;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid #e5e7eb;
+  
+    h2 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+  }
+  
+  mat-dialog-content {
+    padding: 24px;
+  }

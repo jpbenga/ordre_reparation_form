@@ -18,6 +18,7 @@
       (sendForBilling)="onSendForBilling()"
       (viewHistory)="onViewHistory()"
       (showHelp)="onShowHelp()"
+      (exportOrder)="onExportOrder($event)"
     ></app-technician-dashboard>
 
     <app-order-history
@@ -51,6 +52,13 @@
       (sendForBilling)="onSendForBilling()"
     ></app-repair-order-summary>
   </main>
+  
+  <app-order-data-export
+    *ngIf="exportedOrder"
+    [order]="exportedOrder"
+    (close)="onCloseExport()"
+    (addSignature)="onAddSignatureFromExport($event)">
+  </app-order-data-export>
 
   <app-footer></app-footer>
 

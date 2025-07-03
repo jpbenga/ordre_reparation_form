@@ -12,6 +12,10 @@
           <p class="tech-name">{{ technicianInfo.name }}</p>
           <p class="tech-role">Technicien</p>
         </div>
+        <button (click)="generateMockData()" class="help-button-proto" title="Générer des données fictives pour l'historique">
+            <mat-icon>science</mat-icon>
+            <span>Données de test</span>
+        </button>
         <button (click)="onShowHelp()" class="help-button-proto">
           <mat-icon>help_outline</mat-icon>
           <span>Aide</span>
@@ -50,6 +54,8 @@
                 </button>
               </div>
               <div class="order-actions">
+                <button mat-icon-button (click)="exportOrder.emit(order)" title="Voir les détails"><mat-icon>visibility</mat-icon></button>
+                <button mat-icon-button (click)="openSignatureModal(order)" title="Signature"><mat-icon>edit_note</mat-icon></button>
                 <button mat-icon-button (click)="onEdit(order.id)" class="edit-btn" title="Modifier"><mat-icon>edit</mat-icon></button>
                 <button mat-icon-button (click)="onDelete(order.id)" class="delete-btn" title="Supprimer"><mat-icon>delete</mat-icon></button>
               </div>
@@ -110,6 +116,8 @@
                 <p class="vehicle-info">{{ order.vehicle.brand }} - {{ order.vehicle.registration }}</p>
               </div>
               <div class="order-actions">
+                <button mat-icon-button (click)="exportOrder.emit(order)" title="Voir les détails"><mat-icon>visibility</mat-icon></button>
+                <button mat-icon-button (click)="openSignatureModal(order)" title="Signature"><mat-icon>edit_note</mat-icon></button>
                 <button mat-icon-button (click)="onEdit(order.id)" class="edit-btn" title="Modifier"><mat-icon>edit</mat-icon></button>
                 <button mat-icon-button (click)="onDelete(order.id)" class="delete-btn" title="Supprimer"><mat-icon>delete</mat-icon></button>
               </div>

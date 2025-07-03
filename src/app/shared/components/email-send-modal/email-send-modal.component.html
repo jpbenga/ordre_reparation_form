@@ -1,0 +1,52 @@
+<div class="email-modal-container">
+    <div class="modal-header">
+      <h3 class="modal-title">
+        <mat-icon>mail_outline</mat-icon>
+        Envoi pour facturation
+      </h3>
+      <button mat-icon-button (click)="onClose()" [disabled]="stage === 'sending'">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  
+    <mat-dialog-content>
+      <div [ngSwitch]="stage">
+        <div *ngSwitchCase="'input'">
+          <p class="info-text">
+            Vous êtes sur le point d'envoyer {{ data.ordersCount }} ordre(s) de réparation pour facturation.
+          </p>
+          <div class="orders-count-box">
+            <mat-icon>description</mat-icon>
+            <span>{{ data.ordersCount }} ordre(s) de réparation sélectionné(s)</span>
+          </div>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Adresse email du destinataire</mat-label>
+            <input matInput type="email" [(ngModel)]="email" placeholder="comptabilite@entreprise.com" required>
+            <mat-error *ngIf="error">{{ error }}</mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div *ngSwitchCase="'sending'" class="status-container">
+          <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+          <h4 class="status-title">Envoi en cours...</h4>
+          <p class="status-text">Veuillez patienter.</p>
+        </div>
+  
+        <div *ngSwitchCase="'success'" class="status-container">
+          <div class="success-icon-wrapper">
+            <mat-icon>check_circle</mat-icon>
+          </div>
+          <h4 class="status-title">Envoi réussi !</h4>
+          <p class="status-text">
+            {{ data.ordersCount }} ordre(s) ont été envoyés à {{ email }}.
+          </p>
+        </div>
+      </div>
+    </mat-dialog-content>
+  
+    <mat-dialog-actions align="end" *ngIf="stage === 'input'">
+      <app-button variant="primary" (buttonClick)="onSendEmail()" icon="send">
+        Envoyer
+      </app-button>
+    </mat-dialog-actions>
+  </div>

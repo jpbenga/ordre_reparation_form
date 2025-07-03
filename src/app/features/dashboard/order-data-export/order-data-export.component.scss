@@ -1,0 +1,163 @@
+:host {
+  position: fixed;
+  inset: 0;
+  background-color: white;
+  z-index: 1001;
+  overflow-y: auto;
+}
+
+.export-header {
+  background-color: #0054A4;
+  color: white;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.close-button {
+  color: white;
+}
+
+.export-content {
+  padding: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 16px;
+}
+
+.content-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #0054A4;
+  margin: 0;
+}
+
+.order-id {
+  color: #6b7280;
+}
+
+.order-meta {
+  text-align: right;
+  color: #6b7280;
+  p {
+    margin: 0;
+  }
+}
+
+.grid-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.info-box {
+  background-color: #f9fafb;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.box-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #0054A4;
+  margin: 0 0 16px 0;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 8px;
+}
+
+.info-box table {
+  width: 100%;
+  tr {
+    td:first-child {
+      font-weight: 500;
+      color: #374151;
+      padding-right: 16px;
+    }
+    td {
+      padding: 8px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+  }
+  tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+.tire-condition-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.tire-stat {
+  text-align: center;
+  background: white;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  span {
+    display: block;
+    color: #6b7280;
+    font-size: 0.875rem;
+  }
+  strong {
+    font-size: 1.25rem;
+    color: #333;
+  }
+}
+
+.signature-display {
+  border: 1px dashed #d1d5db;
+  border-radius: 6px;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  min-height: 100px;
+  img {
+    max-height: 150px;
+    max-width: 100%;
+  }
+}
+
+@media print {
+  :host {
+    position: static;
+  }
+  .print-hidden {
+    display: none;
+  }
+  .export-content {
+    padding: 0;
+    max-width: none;
+  }
+}

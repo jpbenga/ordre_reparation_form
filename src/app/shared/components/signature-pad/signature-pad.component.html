@@ -1,0 +1,35 @@
+<div class="signature-pad-container">
+    <div class="header">
+      <h3 class="title">
+        <mat-icon>edit</mat-icon>
+        Signer ici
+      </h3>
+      <button (click)="clearSignature()" class="clear-button" title="Effacer la signature">
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+    </div>
+    
+    <div class="canvas-wrapper">
+      <canvas 
+        #signatureCanvas 
+        width="400" 
+        height="150"
+        (mousedown)="startDrawing($event)"
+        (mousemove)="draw($event)"
+        (mouseup)="stopDrawing()"
+        (mouseleave)="stopDrawing()"
+        (touchstart)="startDrawing($event)"
+        (touchmove)="draw($event)"
+        (touchend)="stopDrawing()">
+      </canvas>
+    </div>
+  
+    <div class="actions">
+      <app-button variant="secondary" (buttonClick)="onCancel()">
+        Annuler
+      </app-button>
+      <app-button (buttonClick)="saveSignature()" [disabled]="!hasSignature">
+        Enregistrer
+      </app-button>
+    </div>
+  </div>

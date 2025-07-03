@@ -104,7 +104,8 @@ export class RepairOrderFormComponent implements OnInit {
         tireProfile: '',
         isBackAtCenter: false
       }
-    }
+    },
+    signature: ''
   };
 
   ngOnInit(): void {
@@ -119,7 +120,8 @@ export class RepairOrderFormComponent implements OnInit {
       vehicle: { ...order.vehicle },
       condition: { ...order.condition },
       tires: { ...order.tires },
-      storage: { ...order.storage }
+      storage: { ...order.storage },
+      signature: order.signature || ''
     };
   }
 

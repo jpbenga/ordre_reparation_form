@@ -74,6 +74,7 @@ export interface RepairOrder {
   condition: VehicleCondition;
   tires: TireInfo;
   storage: StorageInfo;
+  signature?: string;
 }
 
 export interface TechnicianInfo {

@@ -1,0 +1,75 @@
+<div class="export-overlay">
+  <div class="export-container">
+    <div class="export-header print-hidden">
+      <h1 class="header-title">
+        <mat-icon>description</mat-icon>
+        Détails de l'ordre de réparation
+      </h1>
+      <div class="header-actions">
+        <app-button variant="secondary" (buttonClick)="handleAddSignature()" icon="edit_note">
+          {{ order.signature ? 'Modifier signature' : 'Ajouter signature' }}
+        </app-button>
+        <app-button variant="secondary" (buttonClick)="handlePrint()" icon="print">
+          Imprimer
+        </app-button>
+        <button mat-icon-button (click)="close.emit()" class="close-button">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="export-content">
+      <div class="content-header">
+        <div>
+          <h2 class="content-title">Ordre de réparation</h2>
+          <p class="order-id">ID: {{ order.id.substring(0, 8).toUpperCase() }}</p>
+        </div>
+        <div class="order-meta">
+          <p>Date: {{ formatDate(order.date) }}</p>
+          <p>Technicien: {{ order.technicianName }}</p>
+        </div>
+      </div>
+
+      <div class="grid-section">
+        <div class="info-box">
+          <h3 class="box-title">Information client</h3>
+          <table>
+            <tbody>
+              <tr><td>Nom</td><td>{{ order.driver.lastName }}</td></tr>
+              <tr><td>Prénom</td><td>{{ order.driver.firstName }}</td></tr>
+              <tr><td>Société</td><td>{{ order.driver.company || 'Particulier' }}</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="info-box">
+          <h3 class="box-title">Information véhicule</h3>
+          <table>
+            <tbody>
+              <tr><td>Immatriculation</td><td class="font-bold">{{ order.vehicle.registration }}</td></tr>
+              <tr><td>Marque</td><td>{{ order.vehicle.brand }}</td></tr>
+               <tr><td>Modèle</td><td>{{ order.vehicle.model }}</td></tr>
+              <tr><td>Kilométrage</td><td>{{ order.vehicle.mileage }} km</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="info-box full-width">
+        <h3 class="box-title">État des pneumatiques (mm restants)</h3>
+        <div class="tire-condition-grid">
+          <div class="tire-stat"><span>AVG</span><strong>{{ order.condition.frontLeft || 'N/A' }}</strong></div>
+          <div class="tire-stat"><span>AVD</span><strong>{{ order.condition.frontRight || 'N/A' }}</strong></div>
+          <div class="tire-stat"><span>ARG</span><strong>{{ order.condition.rearLeft || 'N/A' }}</strong></div>
+          <div class="tire-stat"><span>ARD</span><strong>{{ order.condition.rearRight || 'N/A' }}</strong></div>
+        </div>
+      </div>
+
+      <div class="info-box full-width" *ngIf="order.signature">
+        <h3 class="box-title">Signature du client</h3>
+        <div class="signature-display">
+            <img [src]="order.signature" alt="Signature du client">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

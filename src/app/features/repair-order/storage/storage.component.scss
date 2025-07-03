@@ -67,8 +67,12 @@
 
 .checkbox-group {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-direction: row;
+  gap: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .back-at-center-section {
@@ -133,6 +137,6 @@
 
 @media (max-width: 640px) {
   .checkbox-group {
-    gap: 8px;
+    gap: 16px;
   }
 }

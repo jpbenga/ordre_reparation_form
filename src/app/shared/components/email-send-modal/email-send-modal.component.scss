@@ -1,0 +1,86 @@
+.email-modal-container {
+    padding: 0;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  mat-dialog-content {
+    padding: 24px;
+    min-height: 150px;
+  }
+  
+  .info-text {
+    margin-bottom: 16px;
+    color: #4b5563;
+  }
+  
+  .orders-count-box {
+    background-color: #f0f8ff;
+    border-radius: 6px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    color: #0054A4;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .status-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px 0;
+  }
+  
+  .status-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 16px;
+    margin-bottom: 8px;
+  }
+  
+  .status-text {
+    color: #6b7280;
+  }
+  
+  .success-icon-wrapper {
+    background-color: #dcfce7;
+    border-radius: 50%;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    mat-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+      color: #22c55e;
+    }
+  }
+  
+  mat-dialog-actions {
+    padding: 8px 24px 16px;
+  }
