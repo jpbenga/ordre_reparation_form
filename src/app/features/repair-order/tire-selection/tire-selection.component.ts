@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TireInfo } from '../../../shared/models/repair-order.model';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
@@ -15,7 +15,7 @@ import { InputFieldComponent } from '../../../shared/components/input-field/inpu
     InputFieldComponent
   ],
   templateUrl: './tire-selection.component.html',
-  styleUrl: './tire-selection.component.scss'
+  styleUrls: ['./tire-selection.component.scss']
 })
 export class TireSelectionComponent {
   @Input() data: TireInfo = {
@@ -51,10 +51,14 @@ export class TireSelectionComponent {
   @Output() nextStep = new EventEmitter<void>();
   @Output() previousStep = new EventEmitter<void>();
 
+  @ViewChildren(InputFieldComponent) inputFields!: QueryList<InputFieldComponent>;
+  @ViewChildren('serviceInput') serviceInputs!: QueryList<ElementRef<HTMLInputElement>>;
+
+
   showServices = false;
   showOptions = false;
 
-  errors = {
+  errors: { [key: string]: string } = {
     frontBrand: '',
     rearBrand: '',
     frontModel: '',
@@ -114,57 +118,58 @@ export class TireSelectionComponent {
   }
 
   validate(): boolean {
-    this.errors = {
-      frontBrand: '',
-      rearBrand: '',
-      frontModel: '',
-      rearModel: '',
-      frontDimension: '',
-      rearDimension: '',
-      frontTireCount: '',
-      rearTireCount: '',
-      laborCount: '',
-      valveCount: ''
-    };
+    const newErrors: { [key: string]: string } = {};
 
     if (this.data.frontTireCount && this.data.frontTireCount !== '0') {
-      if (!this.data.frontBrand) {
-        this.errors.frontBrand = 'La marque est requise';
-      }
-      if (!this.data.frontModel) {
-        this.errors.frontModel = 'Le profil est requis';
-      }
-      if (!this.data.frontDimension) {
-        this.errors.frontDimension = 'La dimension est requise';
-      }
+      if (!this.data.frontBrand) newErrors['frontBrand'] = 'La marque est requise';
+      if (!this.data.frontModel) newErrors['frontModel'] = 'Le profil est requis';
+      if (!this.data.frontDimension) newErrors['frontDimension'] = 'La dimension est requise';
     }
 
     if (this.data.rearTireCount && this.data.rearTireCount !== '0') {
-      if (!this.data.rearBrand) {
-        this.errors.rearBrand = 'La marque est requise';
-      }
-      if (!this.data.rearModel) {
-        this.errors.rearModel = 'Le profil est requis';
-      }
-      if (!this.data.rearDimension) {
-        this.errors.rearDimension = 'La dimension est requise';
-      }
+      if (!this.data.rearBrand) newErrors['rearBrand'] = 'La marque est requise';
+      if (!this.data.rearModel) newErrors['rearModel'] = 'Le profil est requis';
+      if (!this.data.rearDimension) newErrors['rearDimension'] = 'La dimension est requise';
     }
 
     if (!this.data.frontTireCount && !this.data.rearTireCount) {
-      this.errors.frontTireCount = 'Le nombre de pneus est requis';
-      this.errors.rearTireCount = 'Le nombre de pneus est requis';
+      newErrors['frontTireCount'] = 'Le nombre de pneus est requis';
     }
 
-    if (!this.data.laborCount) {
-      this.errors.laborCount = 'Le forfait MO est requis';
+    if (!this.data.laborCount) newErrors['laborCount'] = 'Le forfait MO est requis';
+    if (!this.data.valveCount) newErrors['valveCount'] = 'La valve est requise';
+    
+    this.errors = newErrors;
+
+    if (Object.keys(newErrors).length > 0) {
+        if(newErrors['laborCount'] || newErrors['valveCount']) {
+            this.showServices = true;
+        }
+        setTimeout(() => this.focusFirstError(), 0);
+        return false;
+    }
+    
+    return true;
+  }
+
+  private focusFirstError(): void {
+    const errorKeys = Object.keys(this.errors);
+    if (errorKeys.length === 0) return;
+
+    const firstErrorKey = errorKeys[0];
+
+    const serviceInput = this.serviceInputs.find(input => input.nativeElement.id === firstErrorKey);
+    if (serviceInput) {
+        serviceInput.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        serviceInput.nativeElement.focus();
+        return;
     }
 
-    if (!this.data.valveCount) {
-      this.errors.valveCount = 'La valve est requise';
-    }
+    const inputField = this.inputFields.find(field => field.label.toLowerCase().replace(/ /g, '') === firstErrorKey.replace(/([A-Z])/g, ' $1').split(' ')[0].toLowerCase());
 
-    return !Object.values(this.errors).some(error => error);
+    if(inputField) {
+        inputField.elementRef.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   }
 
   onNext(): void {

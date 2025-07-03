@@ -3,7 +3,6 @@
   
   <div class="form-container">
     <div class="tires-grid">
-      <!-- PNEU AV -->
       <div class="tire-section">
         <h3 class="section-title">PNEU AV</h3>
         
@@ -31,7 +30,7 @@
           (valueChange)="onFieldChange('frontBrand', $event)"
           placeholder="Michelin"
           [required]="!!data.frontTireCount && data.frontTireCount !== '0'"
-          [error]="errors.frontBrand"
+          [error]="errors['frontBrand']"
         ></app-input-field>
         
         <app-input-field
@@ -40,7 +39,7 @@
           (valueChange)="onFieldChange('frontModel', $event)"
           placeholder="Primacy 5"
           [required]="!!data.frontTireCount && data.frontTireCount !== '0'"
-          [error]="errors.frontModel"
+          [error]="errors['frontModel']"
         ></app-input-field>
         
         <div class="dimension-row">
@@ -50,7 +49,7 @@
             (valueChange)="onFieldChange('frontDimension', $event)"
             placeholder="Ex: 195/60/R16"
             [required]="!!data.frontTireCount && data.frontTireCount !== '0'"
-            [error]="errors.frontDimension"
+            [error]="errors['frontDimension']"
           ></app-input-field>
           <app-input-field
             label="Indices"
@@ -67,11 +66,10 @@
           placeholder="Nombre"
           type="number"
           [required]="true"
-          [error]="errors.frontTireCount"
+          [error]="errors['frontTireCount']"
         ></app-input-field>
       </div>
 
-      <!-- PNEU AR -->
       <div class="tire-section">
         <h3 class="section-title">
           <span>PNEU AR</span>
@@ -111,7 +109,7 @@
             (valueChange)="onFieldChange('rearBrand', $event)"
             placeholder="Michelin"
             [required]="!!data.rearTireCount && data.rearTireCount !== '0'"
-            [error]="errors.rearBrand"
+            [error]="errors['rearBrand']"
           ></app-input-field>
           <button 
             type="button"
@@ -131,7 +129,7 @@
             (valueChange)="onFieldChange('rearModel', $event)"
             placeholder="Primacy 5"
             [required]="!!data.rearTireCount && data.rearTireCount !== '0'"
-            [error]="errors.rearModel"
+            [error]="errors['rearModel']"
           ></app-input-field>
           <button 
             type="button"
@@ -152,7 +150,7 @@
               (valueChange)="onFieldChange('rearDimension', $event)"
               placeholder="Ex: 195/60/R16"
               [required]="!!data.rearTireCount && data.rearTireCount !== '0'"
-              [error]="errors.rearDimension"
+              [error]="errors['rearDimension']"
             ></app-input-field>
             <button 
               type="button"
@@ -189,13 +187,11 @@
           (valueChange)="onFieldChange('rearTireCount', $event)"
           placeholder="Nombre"
           type="number"
-          [required]="true"
-          [error]="errors.rearTireCount"
+          [error]="errors['rearTireCount']"
         ></app-input-field>
       </div>
     </div>
 
-    <!-- Forfaits et services -->
     <div class="collapsible-section">
       <button 
         class="section-header"
@@ -221,14 +217,16 @@
               </td>
               <td>
                 <input 
+                  #serviceInput
+                  id="laborCount"
                   type="number"
                   [value]="data.laborCount"
                   (input)="onFieldChange('laborCount', $any($event.target).value)"
                   placeholder="Nombre"
-                  [class.error]="errors.laborCount"
+                  [class.error]="errors['laborCount']"
                   class="service-input"
                 />
-                <div *ngIf="errors.laborCount" class="error-text">{{ errors.laborCount }}</div>
+                <div *ngIf="errors['laborCount']" class="error-text">{{ errors['laborCount'] }}</div>
               </td>
             </tr>
             <tr>
@@ -237,14 +235,16 @@
               </td>
               <td>
                 <input 
+                  #serviceInput
+                  id="valveCount"
                   type="number"
                   [value]="data.valveCount"
                   (input)="onFieldChange('valveCount', $any($event.target).value)"
                   placeholder="Nombre"
-                  [class.error]="errors.valveCount"
+                  [class.error]="errors['valveCount']"
                   class="service-input"
                 />
-                <div *ngIf="errors.valveCount" class="error-text">{{ errors.valveCount }}</div>
+                <div *ngIf="errors['valveCount']" class="error-text">{{ errors['valveCount'] }}</div>
               </td>
             </tr>
             <tr>
@@ -300,7 +300,6 @@
       </div>
     </div>
 
-    <!-- Options supplémentaires -->
     <div class="collapsible-section">
       <button 
         class="section-header"
